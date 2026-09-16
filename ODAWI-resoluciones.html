@@ -36,7 +36,7 @@ kbd{font:12px Consolas,monospace;border:1px solid #c6d0c9;border-radius:3px;back
 @media print{pre.cm-s-odawi{background:#f3f4f6;color:#26313c}.cm-s-odawi .cm-comment{color:#586170}.cm-s-odawi .cm-string{color:#386724}.cm-s-odawi .cm-keyword{color:#7a3791}.cm-s-odawi .cm-number,.cm-s-odawi .cm-atom{color:#915017}.cm-s-odawi .cm-def,.cm-s-odawi .cm-property{color:#205d93}.cm-s-odawi .cm-variable{color:#9b3145}}
 </style><body><h1>ODAWI · Resoluciones explicadas</h1>
 
-<p>Usá este documento después de intentar los ejercicios. Hay otras soluciones correctas: compará el razonamiento, las entradas y las salidas.</p>
+<p>Usá este documento después de intentar los ejercicios. Primero, 24 ejercicios de preparación, con objetos literales en el nivel 8. Después, 24 ejercicios para construir exactamente el código de clase y resolver la mesa de trabajo.</p>
 
 <h2>Etapa 1. Entrada y salida</h2>
 
@@ -697,67 +697,57 @@ kbd{font:12px Consolas,monospace;border:1px solid #c6d0c9;border-radius:3px;back
 
 <h2>Etapa 8. Objetos literales</h2>
 
-<h3>Ejercicio 22. Crear un jugador</h3>
+<h3>Ejercicio 22. Crear una ficha</h3>
 
 <pre class="cm-s-odawi"><code>
-<span class="cm-keyword">function</span> <span class="cm-def">crearJugador</span>(<span class="cm-def">nombreJugador</span>) {
+<span class="cm-keyword">function</span> <span class="cm-def">crearFicha</span>(<span class="cm-def">nombreJugador</span>) {
 
   <span class="cm-keyword">return</span> {
 
     <span class="cm-property">nombre</span>: <span class="cm-variable-2">nombreJugador</span>,
 
-    <span class="cm-property">victorias</span>: <span class="cm-number">0</span>
+    <span class="cm-property">victorias</span>: <span class="cm-number">0</span>,
 
-  };
+    <span class="cm-property">derrotas</span>: <span class="cm-number">0</span>,
+
+    <span class="cm-property">empates</span>: <span class="cm-number">0</span>
+
+  }
 
 }
 
 
 
-<span class="cm-keyword">const</span> <span class="cm-def">nombreIngresado</span> <span class="cm-operator">=</span> <span class="cm-variable">prompt</span>(<span class="cm-string">&quot;Nombre del jugador:&quot;</span>);
+<span class="cm-keyword">const</span> <span class="cm-def">nombreJugador</span> <span class="cm-operator">=</span> <span class="cm-variable">prompt</span>(<span class="cm-string">'Nombre del jugador:'</span>)
 
-<span class="cm-keyword">const</span> <span class="cm-def">jugador</span> <span class="cm-operator">=</span> <span class="cm-variable">crearJugador</span>(<span class="cm-variable">nombreIngresado</span>);
+<span class="cm-keyword">const</span> <span class="cm-def">fichaJugador</span> <span class="cm-operator">=</span> <span class="cm-variable">crearFicha</span>(<span class="cm-variable">nombreJugador</span>)
 
-<span class="cm-keyword">const</span> <span class="cm-def">computadora</span> <span class="cm-operator">=</span> <span class="cm-variable">crearJugador</span>(<span class="cm-string">&quot;Computadora&quot;</span>);
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">fichaJugador</span>)
 
-<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">jugador</span>);
-
-<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">computadora</span>);
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">fichaJugador</span>.<span class="cm-property">nombre</span>)
 
 </code></pre>
 
-<p>Cada llamada crea un objeto distinto. Ambos tienen las mismas propiedades, pero conservan sus datos de manera independiente.</p>
+<p>Cada llamada crea una ficha nueva. El parámetro se guarda en la propiedad nombre; las cantidades son números, no textos.</p>
 
 <p><strong>Probá:</strong></p>
 
-<p>Entrada: Ana → {nombre: &quot;Ana&quot;, victorias: 0} y {nombre: &quot;Computadora&quot;, victorias: 0}.</p>
+<p>Ana → {nombre: &quot;Ana&quot;, victorias: 0, derrotas: 0, empates: 0}, y después Ana. Creá otra ficha para Luis: debe ser un objeto independiente.</p>
 
-<h3>Ejercicio 23. Actualizar el marcador</h3>
+<h3>Ejercicio 23. Registrar los tres resultados</h3>
 
 <pre class="cm-s-odawi"><code>
-<span class="cm-keyword">function</span> <span class="cm-def">crearJugador</span>(<span class="cm-def">nombreJugador</span>) {
+<span class="cm-keyword">function</span> <span class="cm-def">crearFicha</span>(<span class="cm-def">nombreJugador</span>) {
 
   <span class="cm-keyword">return</span> {
 
     <span class="cm-property">nombre</span>: <span class="cm-variable-2">nombreJugador</span>,
 
-    <span class="cm-property">victorias</span>: <span class="cm-number">0</span>
+    <span class="cm-property">victorias</span>: <span class="cm-number">0</span>,
 
-  };
+    <span class="cm-property">derrotas</span>: <span class="cm-number">0</span>,
 
-}
-
-
-
-<span class="cm-keyword">function</span> <span class="cm-def">registrarResultado</span>(<span class="cm-def">jugador</span>, <span class="cm-def">computadora</span>, <span class="cm-def">resultadoRonda</span>) {
-
-  <span class="cm-keyword">if</span> (<span class="cm-variable-2">resultadoRonda</span> <span class="cm-operator">===</span> <span class="cm-string">&quot;Victoria&quot;</span>) {
-
-    <span class="cm-variable-2">jugador</span>.<span class="cm-property">victorias</span> <span class="cm-operator">=</span> <span class="cm-variable-2">jugador</span>.<span class="cm-property">victorias</span> <span class="cm-operator">+</span> <span class="cm-number">1</span>;
-
-  } <span class="cm-keyword">else</span> <span class="cm-keyword">if</span> (<span class="cm-variable-2">resultadoRonda</span> <span class="cm-operator">===</span> <span class="cm-string">&quot;Derrota&quot;</span>) {
-
-    <span class="cm-variable-2">computadora</span>.<span class="cm-property">victorias</span> <span class="cm-operator">=</span> <span class="cm-variable-2">computadora</span>.<span class="cm-property">victorias</span> <span class="cm-operator">+</span> <span class="cm-number">1</span>;
+    <span class="cm-property">empates</span>: <span class="cm-number">0</span>
 
   }
 
@@ -765,160 +755,513 @@ kbd{font:12px Consolas,monospace;border:1px solid #c6d0c9;border-radius:3px;back
 
 
 
-<span class="cm-keyword">const</span> <span class="cm-def">jugador</span> <span class="cm-operator">=</span> <span class="cm-variable">crearJugador</span>(<span class="cm-string">&quot;Ana&quot;</span>);
+<span class="cm-keyword">function</span> <span class="cm-def">actualizarFicha</span>(<span class="cm-def">fichaJugador</span>, <span class="cm-def">resultadoPartida</span>) {
 
-<span class="cm-keyword">const</span> <span class="cm-def">computadora</span> <span class="cm-operator">=</span> <span class="cm-variable">crearJugador</span>(<span class="cm-string">&quot;Computadora&quot;</span>);
+  <span class="cm-keyword">if</span> (<span class="cm-variable-2">resultadoPartida</span> <span class="cm-operator">==</span> <span class="cm-string">'Gana el jugador 👶🏻'</span>) {
 
-<span class="cm-variable">registrarResultado</span>(<span class="cm-variable">jugador</span>, <span class="cm-variable">computadora</span>, <span class="cm-string">&quot;Victoria&quot;</span>);
+    <span class="cm-variable-2">fichaJugador</span>.<span class="cm-property">victorias</span> <span class="cm-operator">=</span> <span class="cm-variable-2">fichaJugador</span>.<span class="cm-property">victorias</span> <span class="cm-operator">+</span> <span class="cm-number">1</span>
 
-<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">jugador</span>.<span class="cm-property">victorias</span> <span class="cm-operator">+</span> <span class="cm-string">&quot; a &quot;</span> <span class="cm-operator">+</span> <span class="cm-variable">computadora</span>.<span class="cm-property">victorias</span>);
+  } <span class="cm-keyword">else</span> <span class="cm-keyword">if</span> (<span class="cm-variable-2">resultadoPartida</span> <span class="cm-operator">==</span> <span class="cm-string">'Gana la PC 🤖'</span>) {
 
-<span class="cm-variable">registrarResultado</span>(<span class="cm-variable">jugador</span>, <span class="cm-variable">computadora</span>, <span class="cm-string">&quot;Empate&quot;</span>);
+    <span class="cm-variable-2">fichaJugador</span>.<span class="cm-property">derrotas</span> <span class="cm-operator">=</span> <span class="cm-variable-2">fichaJugador</span>.<span class="cm-property">derrotas</span> <span class="cm-operator">+</span> <span class="cm-number">1</span>
 
-<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">jugador</span>.<span class="cm-property">victorias</span> <span class="cm-operator">+</span> <span class="cm-string">&quot; a &quot;</span> <span class="cm-operator">+</span> <span class="cm-variable">computadora</span>.<span class="cm-property">victorias</span>);
+  } <span class="cm-keyword">else</span> <span class="cm-keyword">if</span> (<span class="cm-variable-2">resultadoPartida</span> <span class="cm-operator">==</span> <span class="cm-string">'Empate 🫱🏻🫲🏻'</span>) {
 
-<span class="cm-variable">registrarResultado</span>(<span class="cm-variable">jugador</span>, <span class="cm-variable">computadora</span>, <span class="cm-string">&quot;Derrota&quot;</span>);
+    <span class="cm-variable-2">fichaJugador</span>.<span class="cm-property">empates</span> <span class="cm-operator">=</span> <span class="cm-variable-2">fichaJugador</span>.<span class="cm-property">empates</span> <span class="cm-operator">+</span> <span class="cm-number">1</span>
 
-<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">jugador</span>.<span class="cm-property">victorias</span> <span class="cm-operator">+</span> <span class="cm-string">&quot; a &quot;</span> <span class="cm-operator">+</span> <span class="cm-variable">computadora</span>.<span class="cm-property">victorias</span>);
+  }
+
+}
+
+
+
+<span class="cm-keyword">const</span> <span class="cm-def">fichaJugador</span> <span class="cm-operator">=</span> <span class="cm-variable">crearFicha</span>(<span class="cm-string">'Ana'</span>)
+
+<span class="cm-variable">actualizarFicha</span>(<span class="cm-variable">fichaJugador</span>, <span class="cm-string">'Gana el jugador 👶🏻'</span>)
+
+<span class="cm-variable">actualizarFicha</span>(<span class="cm-variable">fichaJugador</span>, <span class="cm-string">'Empate 🫱🏻🫲🏻'</span>)
+
+<span class="cm-variable">actualizarFicha</span>(<span class="cm-variable">fichaJugador</span>, <span class="cm-string">'Gana la PC 🤖'</span>)
+
+<span class="cm-variable">actualizarFicha</span>(<span class="cm-variable">fichaJugador</span>, <span class="cm-string">'Gana el jugador 👶🏻'</span>)
+
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">fichaJugador</span>)
 
 </code></pre>
 
-<p>La función modifica las fichas que recibió. Un empate se registra en el historial del juego, pero no suma victorias.</p>
+<p>La función modifica el objeto recibido. No necesita retornar otro objeto: la variable fichaJugador sigue apuntando a la ficha actualizada.</p>
 
 <p><strong>Probá:</strong></p>
 
-<p>Después de Victoria → 1 a 0.</p>
-<p>Después de Empate → 1 a 0.</p>
-<p>Después de Derrota → 1 a 1.</p>
+<p>Victoria, empate, derrota y victoria → nombre Ana, victorias 2, derrotas 1, empates 1. Una ficha nueva sigue en cero. Un resultado desconocido deja los valores iguales.</p>
 
-<h3>Ejercicio 24. Conectar el juego</h3>
+<h3>Ejercicio 24. Construir un resumen</h3>
 
 <pre class="cm-s-odawi"><code>
-<span class="cm-keyword">function</span> <span class="cm-def">jugarEncuentro</span>() {
+<span class="cm-keyword">function</span> <span class="cm-def">crearFicha</span>(<span class="cm-def">nombreJugador</span>) {
 
-  <span class="cm-keyword">const</span> <span class="cm-def">nombreJugador</span> <span class="cm-operator">=</span> <span class="cm-variable">pedirNombre</span>();
+  <span class="cm-keyword">return</span> {
 
-  <span class="cm-keyword">if</span> (<span class="cm-variable-2">nombreJugador</span> <span class="cm-operator">===</span> <span class="cm-atom">null</span>) {
+    <span class="cm-property">nombre</span>: <span class="cm-variable-2">nombreJugador</span>,
 
-    <span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-string">&quot;Inicio cancelado&quot;</span>);
+    <span class="cm-property">victorias</span>: <span class="cm-number">0</span>,
 
-    <span class="cm-keyword">return</span>;
+    <span class="cm-property">derrotas</span>: <span class="cm-number">0</span>,
 
-  }
-
-  <span class="cm-variable">alert</span>(<span class="cm-variable">crearSaludo</span>(<span class="cm-variable-2">nombreJugador</span>));
-
-  <span class="cm-keyword">const</span> <span class="cm-def">jugador</span> <span class="cm-operator">=</span> <span class="cm-variable">crearJugador</span>(<span class="cm-variable-2">nombreJugador</span>);
-
-  <span class="cm-keyword">const</span> <span class="cm-def">computadora</span> <span class="cm-operator">=</span> <span class="cm-variable">crearJugador</span>(<span class="cm-string">&quot;Computadora&quot;</span>);
-
-  <span class="cm-keyword">const</span> <span class="cm-def">historialRondas</span> <span class="cm-operator">=</span> [];
-
-  <span class="cm-keyword">const</span> <span class="cm-def">jugadasJugador</span> <span class="cm-operator">=</span> [];
-
-
-
-  <span class="cm-keyword">while</span> (<span class="cm-variable-2">jugador</span>.<span class="cm-property">victorias</span> <span class="cm-operator">&lt;</span> <span class="cm-number">2</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">computadora</span>.<span class="cm-property">victorias</span> <span class="cm-operator">&lt;</span> <span class="cm-number">2</span>) {
-
-    <span class="cm-keyword">const</span> <span class="cm-def">jugadaJugador</span> <span class="cm-operator">=</span> <span class="cm-variable">pedirJugada</span>();
-
-    <span class="cm-keyword">if</span> (<span class="cm-variable-2">jugadaJugador</span> <span class="cm-operator">===</span> <span class="cm-atom">null</span>) {
-
-      <span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-string">&quot;Encuentro cancelado. El marcador es parcial.&quot;</span>);
-
-      <span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable-2">jugador</span>.<span class="cm-property">nombre</span> <span class="cm-operator">+</span> <span class="cm-string">&quot;: &quot;</span> <span class="cm-operator">+</span> <span class="cm-variable-2">jugador</span>.<span class="cm-property">victorias</span> <span class="cm-operator">+</span> <span class="cm-string">&quot; / Computadora: &quot;</span> <span class="cm-operator">+</span> <span class="cm-variable-2">computadora</span>.<span class="cm-property">victorias</span>);
-
-      <span class="cm-variable">mostrarHistorial</span>(<span class="cm-variable-2">historialRondas</span>);
-
-      <span class="cm-keyword">return</span>;
-
-    }
-
-    <span class="cm-keyword">const</span> <span class="cm-def">jugadaComputadora</span> <span class="cm-operator">=</span> <span class="cm-variable">generarJugadaComputadora</span>();
-
-    <span class="cm-keyword">const</span> <span class="cm-def">resultadoRonda</span> <span class="cm-operator">=</span> <span class="cm-variable">compararJugadas</span>(<span class="cm-variable-2">jugadaJugador</span>, <span class="cm-variable-2">jugadaComputadora</span>);
-
-    <span class="cm-variable">registrarResultado</span>(<span class="cm-variable-2">jugador</span>, <span class="cm-variable-2">computadora</span>, <span class="cm-variable-2">resultadoRonda</span>);
-
-    <span class="cm-variable-2">historialRondas</span>.<span class="cm-property">push</span>(<span class="cm-variable-2">resultadoRonda</span>);
-
-    <span class="cm-variable-2">jugadasJugador</span>.<span class="cm-property">push</span>(<span class="cm-variable-2">jugadaJugador</span>);
-
-    <span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">obtenerNombreJugada</span>(<span class="cm-variable-2">jugadaJugador</span>) <span class="cm-operator">+</span> <span class="cm-string">&quot; contra &quot;</span> <span class="cm-operator">+</span> <span class="cm-variable">obtenerNombreJugada</span>(<span class="cm-variable-2">jugadaComputadora</span>));
-
-    <span class="cm-variable">alert</span>(<span class="cm-variable-2">resultadoRonda</span>);
+    <span class="cm-property">empates</span>: <span class="cm-number">0</span>
 
   }
-
-
-
-  <span class="cm-keyword">if</span> (<span class="cm-variable-2">jugador</span>.<span class="cm-property">victorias</span> <span class="cm-operator">===</span> <span class="cm-number">2</span>) {
-
-    <span class="cm-variable">alert</span>(<span class="cm-string">&quot;Ganó &quot;</span> <span class="cm-operator">+</span> <span class="cm-variable-2">jugador</span>.<span class="cm-property">nombre</span>);
-
-  } <span class="cm-keyword">else</span> {
-
-    <span class="cm-variable">alert</span>(<span class="cm-string">&quot;Ganó la computadora. ¡Suerte en la próxima!&quot;</span>);
-
-  }
-
-  <span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-string">&quot;Marcador final: &quot;</span> <span class="cm-operator">+</span> <span class="cm-variable-2">jugador</span>.<span class="cm-property">victorias</span> <span class="cm-operator">+</span> <span class="cm-string">&quot; a &quot;</span> <span class="cm-operator">+</span> <span class="cm-variable-2">computadora</span>.<span class="cm-property">victorias</span>);
-
-  <span class="cm-variable">mostrarHistorial</span>(<span class="cm-variable-2">historialRondas</span>);
-
-  <span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-string">&quot;Tus jugadas:&quot;</span>, <span class="cm-variable">traducirJugadas</span>(<span class="cm-variable-2">jugadasJugador</span>));
-
-  <span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-string">&quot;Tus victorias: &quot;</span> <span class="cm-operator">+</span> <span class="cm-variable">obtenerVictorias</span>(<span class="cm-variable-2">historialRondas</span>).<span class="cm-property">length</span>);
 
 }
 
 
 
-<span class="cm-comment">// FUNCIONES DE APOYO</span>
+<span class="cm-keyword">function</span> <span class="cm-def">actualizarFicha</span>(<span class="cm-def">fichaJugador</span>, <span class="cm-def">resultadoPartida</span>) {
 
-<span class="cm-keyword">function</span> <span class="cm-def">crearSaludo</span>(<span class="cm-def">nombreJugador</span>) {
+  <span class="cm-keyword">if</span> (<span class="cm-variable-2">resultadoPartida</span> <span class="cm-operator">==</span> <span class="cm-string">'Gana el jugador 👶🏻'</span>) {
 
-  <span class="cm-keyword">return</span> <span class="cm-string">&quot;Hola, &quot;</span> <span class="cm-operator">+</span> <span class="cm-variable-2">nombreJugador</span> <span class="cm-operator">+</span> <span class="cm-string">&quot;. Vamos a jugar.&quot;</span>;
+    <span class="cm-variable-2">fichaJugador</span>.<span class="cm-property">victorias</span> <span class="cm-operator">=</span> <span class="cm-variable-2">fichaJugador</span>.<span class="cm-property">victorias</span> <span class="cm-operator">+</span> <span class="cm-number">1</span>
+
+  } <span class="cm-keyword">else</span> <span class="cm-keyword">if</span> (<span class="cm-variable-2">resultadoPartida</span> <span class="cm-operator">==</span> <span class="cm-string">'Gana la PC 🤖'</span>) {
+
+    <span class="cm-variable-2">fichaJugador</span>.<span class="cm-property">derrotas</span> <span class="cm-operator">=</span> <span class="cm-variable-2">fichaJugador</span>.<span class="cm-property">derrotas</span> <span class="cm-operator">+</span> <span class="cm-number">1</span>
+
+  } <span class="cm-keyword">else</span> <span class="cm-keyword">if</span> (<span class="cm-variable-2">resultadoPartida</span> <span class="cm-operator">==</span> <span class="cm-string">'Empate 🫱🏻🫲🏻'</span>) {
+
+    <span class="cm-variable-2">fichaJugador</span>.<span class="cm-property">empates</span> <span class="cm-operator">=</span> <span class="cm-variable-2">fichaJugador</span>.<span class="cm-property">empates</span> <span class="cm-operator">+</span> <span class="cm-number">1</span>
+
+  }
 
 }
 
 
 
-<span class="cm-keyword">function</span> <span class="cm-def">pedirNombre</span>() {
+<span class="cm-keyword">function</span> <span class="cm-def">crearResumen</span>(<span class="cm-def">fichaJugador</span>) {
 
-  <span class="cm-keyword">let</span> <span class="cm-def">nombreJugador</span>;
+  <span class="cm-keyword">const</span> <span class="cm-def">partidasJugadas</span> <span class="cm-operator">=</span> <span class="cm-variable-2">fichaJugador</span>.<span class="cm-property">victorias</span> <span class="cm-operator">+</span> <span class="cm-variable-2">fichaJugador</span>.<span class="cm-property">derrotas</span> <span class="cm-operator">+</span> <span class="cm-variable-2">fichaJugador</span>.<span class="cm-property">empates</span>
+
+  <span class="cm-keyword">return</span> {
+
+    <span class="cm-property">nombre</span>: <span class="cm-variable-2">fichaJugador</span>.<span class="cm-property">nombre</span>,
+
+    <span class="cm-property">partidasJugadas</span>: <span class="cm-variable-2">partidasJugadas</span>,
+
+    <span class="cm-property">tieneVictorias</span>: <span class="cm-variable-2">fichaJugador</span>.<span class="cm-property">victorias</span> <span class="cm-operator">&gt;</span> <span class="cm-number">0</span>
+
+  }
+
+}
+
+
+
+<span class="cm-keyword">const</span> <span class="cm-def">fichaJugador</span> <span class="cm-operator">=</span> <span class="cm-variable">crearFicha</span>(<span class="cm-string">'Ana'</span>)
+
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">crearResumen</span>(<span class="cm-variable">fichaJugador</span>))
+
+<span class="cm-variable">actualizarFicha</span>(<span class="cm-variable">fichaJugador</span>, <span class="cm-string">'Gana el jugador 👶🏻'</span>)
+
+<span class="cm-variable">actualizarFicha</span>(<span class="cm-variable">fichaJugador</span>, <span class="cm-string">'Empate 🫱🏻🫲🏻'</span>)
+
+<span class="cm-variable">actualizarFicha</span>(<span class="cm-variable">fichaJugador</span>, <span class="cm-string">'Gana la PC 🤖'</span>)
+
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">crearResumen</span>(<span class="cm-variable">fichaJugador</span>))
+
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">fichaJugador</span>)
+
+</code></pre>
+
+<p>El resumen combina texto, número y booleano. A diferencia de actualizarFicha, esta función no modifica la ficha: crea y retorna un objeto distinto.</p>
+
+<p><strong>Probá:</strong></p>
+
+<p>Ficha nueva → {nombre: &quot;Ana&quot;, partidasJugadas: 0, tieneVictorias: false}. Tras victoria, empate y derrota → {nombre: &quot;Ana&quot;, partidasJugadas: 3, tieneVictorias: true}. La ficha original conserva sus cuatro propiedades.</p>
+
+<h2>Etapa 9. Entrada y nombre</h2>
+
+<h3>Ejercicio 25. Pedir y mostrar</h3>
+
+<pre class="cm-s-odawi"><code>
+<span class="cm-comment">// FUNCIÓN DADA: usala sin modificarla.</span>
+
+<span class="cm-keyword">function</span> <span class="cm-def">validarNombre</span>(<span class="cm-def">nombre</span>) {
+
+  <span class="cm-keyword">if</span> (<span class="cm-variable-2">nombre</span> <span class="cm-operator">==</span> <span class="cm-atom">null</span> <span class="cm-operator">||</span> <span class="cm-variable-2">nombre</span> <span class="cm-operator">==</span> <span class="cm-string">''</span> <span class="cm-operator">||</span> <span class="cm-variable-2">nombre</span>.<span class="cm-property">length</span> <span class="cm-operator">&lt;</span> <span class="cm-number">3</span> <span class="cm-operator">||</span> <span class="cm-operator">!</span><span class="cm-variable">isNaN</span>(<span class="cm-variable-2">nombre</span>)) {
+
+    <span class="cm-variable">alert</span>(<span class="cm-string">'El nombre ingresado debe ser un texto de al menos 3 caracteres'</span>)
+
+    <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
+
+  }
+
+  <span class="cm-keyword">return</span> <span class="cm-atom">true</span>
+
+}
+
+
+
+<span class="cm-keyword">let</span> <span class="cm-def">nombre</span> <span class="cm-operator">=</span> <span class="cm-variable">prompt</span>(<span class="cm-string">'Ingrese su nombre por favor: '</span>)
+
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">nombre</span>)
+
+</code></pre>
+
+<p>Todavía preguntamos una sola vez. El validador está disponible, pero aún no lo llamamos.</p>
+
+<p><strong>Probá:</strong></p>
+
+<p>Ana → Ana en Resultados. Cancelar → null.</p>
+
+<h3>Ejercicio 26. Usar el validador dado</h3>
+
+<pre class="cm-s-odawi"><code>
+<span class="cm-comment">// FUNCIÓN DADA: usala sin modificarla.</span>
+
+<span class="cm-keyword">function</span> <span class="cm-def">validarNombre</span>(<span class="cm-def">nombre</span>) {
+
+  <span class="cm-keyword">if</span> (<span class="cm-variable-2">nombre</span> <span class="cm-operator">==</span> <span class="cm-atom">null</span> <span class="cm-operator">||</span> <span class="cm-variable-2">nombre</span> <span class="cm-operator">==</span> <span class="cm-string">''</span> <span class="cm-operator">||</span> <span class="cm-variable-2">nombre</span>.<span class="cm-property">length</span> <span class="cm-operator">&lt;</span> <span class="cm-number">3</span> <span class="cm-operator">||</span> <span class="cm-operator">!</span><span class="cm-variable">isNaN</span>(<span class="cm-variable-2">nombre</span>)) {
+
+    <span class="cm-variable">alert</span>(<span class="cm-string">'El nombre ingresado debe ser un texto de al menos 3 caracteres'</span>)
+
+    <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
+
+  }
+
+  <span class="cm-keyword">return</span> <span class="cm-atom">true</span>
+
+}
+
+
+
+<span class="cm-keyword">let</span> <span class="cm-def">nombre</span> <span class="cm-operator">=</span> <span class="cm-variable">prompt</span>(<span class="cm-string">'Ingrese su nombre por favor: '</span>)
+
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">validarNombre</span>(<span class="cm-variable">nombre</span>))
+
+</code></pre>
+
+<p>El argumento nombre entra en la función; return devuelve el booleano. Aún no repetimos la pregunta.</p>
+
+<p><strong>Probá:</strong></p>
+
+<p>Ana → true. Al, 123, vacío o Cancelar → aviso y false.</p>
+
+<h3>Ejercicio 27. Construir los mensajes</h3>
+
+<pre class="cm-s-odawi"><code>
+<span class="cm-comment">// FUNCIÓN DADA: usala sin modificarla.</span>
+
+<span class="cm-keyword">function</span> <span class="cm-def">validarNombre</span>(<span class="cm-def">nombre</span>) {
+
+  <span class="cm-keyword">if</span> (<span class="cm-variable-2">nombre</span> <span class="cm-operator">==</span> <span class="cm-atom">null</span> <span class="cm-operator">||</span> <span class="cm-variable-2">nombre</span> <span class="cm-operator">==</span> <span class="cm-string">''</span> <span class="cm-operator">||</span> <span class="cm-variable-2">nombre</span>.<span class="cm-property">length</span> <span class="cm-operator">&lt;</span> <span class="cm-number">3</span> <span class="cm-operator">||</span> <span class="cm-operator">!</span><span class="cm-variable">isNaN</span>(<span class="cm-variable-2">nombre</span>)) {
+
+    <span class="cm-variable">alert</span>(<span class="cm-string">'El nombre ingresado debe ser un texto de al menos 3 caracteres'</span>)
+
+    <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
+
+  }
+
+  <span class="cm-keyword">return</span> <span class="cm-atom">true</span>
+
+}
+
+
+
+<span class="cm-variable">alert</span>(<span class="cm-string">'Bienvenido al piedra, papel o tijera de Front 2 :D'</span>)
+
+<span class="cm-keyword">let</span> <span class="cm-def">nombre</span> <span class="cm-operator">=</span> <span class="cm-variable">prompt</span>(<span class="cm-string">'Ingrese su nombre por favor: '</span>)
+
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">validarNombre</span>(<span class="cm-variable">nombre</span>))
+
+<span class="cm-variable">alert</span>(<span class="cm-string">'Gracias por jugar '</span> <span class="cm-operator">+</span> <span class="cm-variable">nombre</span> <span class="cm-operator">+</span> <span class="cm-string">'. Mucha suerte'</span>)
+
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-string">'El jugador es: '</span> <span class="cm-operator">+</span> <span class="cm-variable">nombre</span>)
+
+</code></pre>
+
+<p>Esta es una prueba de mensajes, no la versión final: aún falta repetir cuando la validación falla.</p>
+
+<p><strong>Probá:</strong></p>
+
+<p>Ana → bienvenida, true, Gracias por jugar Ana. Mucha suerte y El jugador es: Ana.</p>
+
+<h2>Etapa 10. La función iniciarJuego</h2>
+
+<h3>Ejercicio 28. Definir y llamar</h3>
+
+<pre class="cm-s-odawi"><code>
+<span class="cm-comment">// FUNCIÓN DADA: usala sin modificarla.</span>
+
+<span class="cm-keyword">function</span> <span class="cm-def">validarNombre</span>(<span class="cm-def">nombre</span>) {
+
+  <span class="cm-keyword">if</span> (<span class="cm-variable-2">nombre</span> <span class="cm-operator">==</span> <span class="cm-atom">null</span> <span class="cm-operator">||</span> <span class="cm-variable-2">nombre</span> <span class="cm-operator">==</span> <span class="cm-string">''</span> <span class="cm-operator">||</span> <span class="cm-variable-2">nombre</span>.<span class="cm-property">length</span> <span class="cm-operator">&lt;</span> <span class="cm-number">3</span> <span class="cm-operator">||</span> <span class="cm-operator">!</span><span class="cm-variable">isNaN</span>(<span class="cm-variable-2">nombre</span>)) {
+
+    <span class="cm-variable">alert</span>(<span class="cm-string">'El nombre ingresado debe ser un texto de al menos 3 caracteres'</span>)
+
+    <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
+
+  }
+
+  <span class="cm-keyword">return</span> <span class="cm-atom">true</span>
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">iniciarJuego</span>() {
+
+  <span class="cm-variable">alert</span>(<span class="cm-string">'Bienvenido al piedra, papel o tijera de Front 2 :D'</span>)
+
+}
+
+
+
+<span class="cm-variable">iniciarJuego</span>()
+
+</code></pre>
+
+<p>La definición reúne instrucciones; la llamada las pone en marcha.</p>
+
+<p><strong>Probá:</strong></p>
+
+<p>Una ejecución → una bienvenida. Si no la llamás, no aparece.</p>
+
+<h3>Ejercicio 29. Repetir hasta validar</h3>
+
+<pre class="cm-s-odawi"><code>
+<span class="cm-comment">// FUNCIÓN DADA: usala sin modificarla.</span>
+
+<span class="cm-keyword">function</span> <span class="cm-def">validarNombre</span>(<span class="cm-def">nombre</span>) {
+
+  <span class="cm-keyword">if</span> (<span class="cm-variable-2">nombre</span> <span class="cm-operator">==</span> <span class="cm-atom">null</span> <span class="cm-operator">||</span> <span class="cm-variable-2">nombre</span> <span class="cm-operator">==</span> <span class="cm-string">''</span> <span class="cm-operator">||</span> <span class="cm-variable-2">nombre</span>.<span class="cm-property">length</span> <span class="cm-operator">&lt;</span> <span class="cm-number">3</span> <span class="cm-operator">||</span> <span class="cm-operator">!</span><span class="cm-variable">isNaN</span>(<span class="cm-variable-2">nombre</span>)) {
+
+    <span class="cm-variable">alert</span>(<span class="cm-string">'El nombre ingresado debe ser un texto de al menos 3 caracteres'</span>)
+
+    <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
+
+  }
+
+  <span class="cm-keyword">return</span> <span class="cm-atom">true</span>
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">iniciarJuego</span>() {
+
+  <span class="cm-variable">alert</span>(<span class="cm-string">'Bienvenido al piedra, papel o tijera de Front 2 :D'</span>)
+
+
+
+  <span class="cm-keyword">let</span> <span class="cm-def">nombre</span>
+
+
 
   <span class="cm-keyword">do</span> {
 
-    <span class="cm-keyword">const</span> <span class="cm-def">entradaNombre</span> <span class="cm-operator">=</span> <span class="cm-variable">prompt</span>(<span class="cm-string">&quot;Tu nombre (al menos 3 caracteres). Cancelar para salir.&quot;</span>);
+    <span class="cm-variable-2">nombre</span> <span class="cm-operator">=</span> <span class="cm-variable">prompt</span>(<span class="cm-string">'Ingrese su nombre por favor: '</span>)
 
-    <span class="cm-keyword">if</span> (<span class="cm-variable-2">entradaNombre</span> <span class="cm-operator">===</span> <span class="cm-atom">null</span>) {
+  } <span class="cm-keyword">while</span> (<span class="cm-operator">!</span><span class="cm-variable">validarNombre</span>(<span class="cm-variable-2">nombre</span>))
 
-      <span class="cm-keyword">return</span> <span class="cm-atom">null</span>;
 
-    }
-
-    <span class="cm-variable-2">nombreJugador</span> <span class="cm-operator">=</span> <span class="cm-variable-2">entradaNombre</span>.<span class="cm-property">trim</span>();
-
-    <span class="cm-keyword">if</span> (<span class="cm-variable-2">nombreJugador</span>.<span class="cm-property">length</span> <span class="cm-operator">&lt;</span> <span class="cm-number">3</span>) {
-
-      <span class="cm-variable">alert</span>(<span class="cm-string">&quot;Escribí al menos 3 caracteres.&quot;</span>);
-
-    }
-
-  } <span class="cm-keyword">while</span> (<span class="cm-variable-2">nombreJugador</span>.<span class="cm-property">length</span> <span class="cm-operator">&lt;</span> <span class="cm-number">3</span>);
-
-  <span class="cm-keyword">return</span> <span class="cm-variable-2">nombreJugador</span>;
 
 }
 
 
 
-<span class="cm-keyword">function</span> <span class="cm-def">validarJugada</span>(<span class="cm-def">numeroJugada</span>) {
+<span class="cm-variable">iniciarJuego</span>()
 
-  <span class="cm-keyword">return</span> <span class="cm-variable">Number</span>.<span class="cm-property">isInteger</span>(<span class="cm-variable-2">numeroJugada</span>) <span class="cm-operator">&amp;&amp;</span>
+</code></pre>
 
-    <span class="cm-variable-2">numeroJugada</span> <span class="cm-operator">&gt;=</span> <span class="cm-number">1</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">numeroJugada</span> <span class="cm-operator">&lt;=</span> <span class="cm-number">3</span>;
+<p>La repetición continúa mientras validarNombre devuelve false. Cancelar devuelve null y por eso no termina el pedido; el botón Detener del laboratorio permite frenar la ejecución.</p>
+
+<p><strong>Probá:</strong></p>
+
+<p>Al → aviso y nueva pregunta; luego Ana → termina. Cancelar también vuelve a preguntar.</p>
+
+<h3>Ejercicio 30. Saludar y retornar</h3>
+
+<pre class="cm-s-odawi"><code>
+<span class="cm-comment">// FUNCIÓN DADA: usala sin modificarla.</span>
+
+<span class="cm-keyword">function</span> <span class="cm-def">validarNombre</span>(<span class="cm-def">nombre</span>) {
+
+  <span class="cm-keyword">if</span> (<span class="cm-variable-2">nombre</span> <span class="cm-operator">==</span> <span class="cm-atom">null</span> <span class="cm-operator">||</span> <span class="cm-variable-2">nombre</span> <span class="cm-operator">==</span> <span class="cm-string">''</span> <span class="cm-operator">||</span> <span class="cm-variable-2">nombre</span>.<span class="cm-property">length</span> <span class="cm-operator">&lt;</span> <span class="cm-number">3</span> <span class="cm-operator">||</span> <span class="cm-operator">!</span><span class="cm-variable">isNaN</span>(<span class="cm-variable-2">nombre</span>)) {
+
+    <span class="cm-variable">alert</span>(<span class="cm-string">'El nombre ingresado debe ser un texto de al menos 3 caracteres'</span>)
+
+    <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
+
+  }
+
+  <span class="cm-keyword">return</span> <span class="cm-atom">true</span>
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">iniciarJuego</span>() {
+
+  <span class="cm-variable">alert</span>(<span class="cm-string">'Bienvenido al piedra, papel o tijera de Front 2 :D'</span>)
+
+
+
+  <span class="cm-keyword">let</span> <span class="cm-def">nombre</span>
+
+
+
+  <span class="cm-keyword">do</span> {
+
+    <span class="cm-variable-2">nombre</span> <span class="cm-operator">=</span> <span class="cm-variable">prompt</span>(<span class="cm-string">'Ingrese su nombre por favor: '</span>)
+
+  } <span class="cm-keyword">while</span> (<span class="cm-operator">!</span><span class="cm-variable">validarNombre</span>(<span class="cm-variable-2">nombre</span>))
+
+
+
+  <span class="cm-variable">alert</span>(<span class="cm-string">'Gracias por jugar '</span> <span class="cm-operator">+</span> <span class="cm-variable-2">nombre</span> <span class="cm-operator">+</span> <span class="cm-string">'. Mucha suerte'</span>)
+
+  <span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-string">'El jugador es: '</span> <span class="cm-operator">+</span> <span class="cm-variable-2">nombre</span>)
+
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">nombre</span>.<span class="cm-property">toLocaleUpperCase</span>()
+
+}
+
+
+
+<span class="cm-keyword">const</span> <span class="cm-def">nombreJugador</span> <span class="cm-operator">=</span> <span class="cm-variable">iniciarJuego</span>()
+
+<span class="cm-variable">alert</span>(<span class="cm-string">'Gracias por jugar :'</span> <span class="cm-operator">+</span> <span class="cm-variable">nombreJugador</span>)
+
+</code></pre>
+
+<p>El nombre original se usa en los primeros mensajes. El valor retornado es el que guarda nombreJugador, en mayúsculas.</p>
+
+<p><strong>Probá:</strong></p>
+
+<p>Ana → consola El jugador es: Ana; último alert Gracias por jugar :ANA.</p>
+
+<h2>Etapa 11. Validar una jugada</h2>
+
+<h3>Ejercicio 31. Armar la condición</h3>
+
+<pre class="cm-s-odawi"><code>
+<span class="cm-keyword">let</span> <span class="cm-def">eleccion</span> <span class="cm-operator">=</span> <span class="cm-number">2</span>
+
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-operator">!</span><span class="cm-variable">isNaN</span>(<span class="cm-variable">eleccion</span>) <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable">eleccion</span> <span class="cm-operator">&gt;</span> <span class="cm-number">0</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable">eleccion</span> <span class="cm-operator">&lt;</span> <span class="cm-number">4</span>)
+
+</code></pre>
+
+<p>Mantenemos la condición del ejemplo. Más adelante pedirJugada convierte la entrada con parseInt antes de llamar al validador.</p>
+
+<p><strong>Probá:</strong></p>
+
+<p>2 → true; 0, 4 y NaN → false. 2.5 → true: esta condición verifica rango, no enteros.</p>
+
+<h3>Ejercicio 32. Retornar true o false</h3>
+
+<pre class="cm-s-odawi"><code>
+<span class="cm-keyword">function</span> <span class="cm-def">validarJugada</span>(<span class="cm-def">eleccion</span>) {
+
+  <span class="cm-keyword">if</span> (<span class="cm-operator">!</span><span class="cm-variable">isNaN</span>(<span class="cm-variable-2">eleccion</span>) <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccion</span> <span class="cm-operator">&gt;</span> <span class="cm-number">0</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccion</span> <span class="cm-operator">&lt;</span> <span class="cm-number">4</span>) {
+
+    <span class="cm-keyword">return</span> <span class="cm-atom">true</span>
+
+  }
+
+  <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
+
+}
+
+
+
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">validarJugada</span>(<span class="cm-number">2</span>))
+
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">validarJugada</span>(<span class="cm-number">0</span>))
+
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">validarJugada</span>(<span class="cm-atom">NaN</span>))
+
+</code></pre>
+
+<p>La función recibe un número y devuelve un booleano. Si retorna true, ya no llega al return false.</p>
+
+<p><strong>Probá:</strong></p>
+
+<p>Las llamadas dadas deben mostrar true, false y false.</p>
+
+<h3>Ejercicio 33. Avisar el error</h3>
+
+<pre class="cm-s-odawi"><code>
+<span class="cm-keyword">function</span> <span class="cm-def">validarJugada</span>(<span class="cm-def">eleccion</span>) {
+
+  <span class="cm-keyword">if</span> (<span class="cm-operator">!</span><span class="cm-variable">isNaN</span>(<span class="cm-variable-2">eleccion</span>) <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccion</span> <span class="cm-operator">&gt;</span> <span class="cm-number">0</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccion</span> <span class="cm-operator">&lt;</span> <span class="cm-number">4</span>) {
+
+    <span class="cm-keyword">return</span> <span class="cm-atom">true</span>
+
+  }
+
+  <span class="cm-variable">alert</span>(<span class="cm-string">'Ingrese un NUMERO entre 1 y 3'</span>)
+
+  <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
+
+}
+
+
+
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">validarJugada</span>(<span class="cm-number">0</span>))
+
+</code></pre>
+
+<p>Solo llegan al aviso las entradas que no retornaron true. No agregamos otra condición ni cambiamos los operadores.</p>
+
+<p><strong>Probá:</strong></p>
+
+<p>1, 2 y 3 → true sin alert. 0, 4 y NaN → Ingrese un NUMERO entre 1 y 3, y false.</p>
+
+<h2>Etapa 12. Pedir una jugada</h2>
+
+<h3>Ejercicio 34. Convertir el dato</h3>
+
+<pre class="cm-s-odawi"><code>
+<span class="cm-keyword">function</span> <span class="cm-def">pedirJugada</span>() {
+
+  <span class="cm-keyword">let</span> <span class="cm-def">eleccion</span> <span class="cm-operator">=</span> <span class="cm-number">0</span>
+
+  <span class="cm-comment">//1 piedra, 2 papel, 3 para tijera</span>
+
+    <span class="cm-variable-2">eleccion</span> <span class="cm-operator">=</span> <span class="cm-variable">parseInt</span>(
+
+      <span class="cm-variable">prompt</span>(<span class="cm-string">'Ingrese un numero para jugar: 1 piedra, 2 papel, 3 para tijera'</span>)
+
+    )
+
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">eleccion</span>
+
+}
+
+
+
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">pedirJugada</span>())
+
+</code></pre>
+
+<p>Esta versión parcial pregunta una vez. Si el texto no empieza con un número, la conversión produce NaN.</p>
+
+<p><strong>Probá:</strong></p>
+
+<p>2 → número 2. hola → NaN. 2abc → 2.</p>
+
+<h3>Ejercicio 35. Repetir con el validador</h3>
+
+<pre class="cm-s-odawi"><code>
+<span class="cm-keyword">function</span> <span class="cm-def">validarJugada</span>(<span class="cm-def">eleccion</span>) {
+
+  <span class="cm-keyword">if</span> (<span class="cm-operator">!</span><span class="cm-variable">isNaN</span>(<span class="cm-variable-2">eleccion</span>) <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccion</span> <span class="cm-operator">&gt;</span> <span class="cm-number">0</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccion</span> <span class="cm-operator">&lt;</span> <span class="cm-number">4</span>) {
+
+    <span class="cm-keyword">return</span> <span class="cm-atom">true</span>
+
+  }
+
+  <span class="cm-variable">alert</span>(<span class="cm-string">'Ingrese un NUMERO entre 1 y 3'</span>)
+
+  <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
 
 }
 
@@ -926,201 +1269,1040 @@ kbd{font:12px Consolas,monospace;border:1px solid #c6d0c9;border-radius:3px;back
 
 <span class="cm-keyword">function</span> <span class="cm-def">pedirJugada</span>() {
 
-  <span class="cm-keyword">let</span> <span class="cm-def">numeroJugada</span>;
+  <span class="cm-keyword">let</span> <span class="cm-def">eleccion</span> <span class="cm-operator">=</span> <span class="cm-number">0</span>
+
+  <span class="cm-comment">//1 piedra, 2 papel, 3 para tijera</span>
 
   <span class="cm-keyword">do</span> {
 
-    <span class="cm-keyword">const</span> <span class="cm-def">entradaJugada</span> <span class="cm-operator">=</span> <span class="cm-variable">prompt</span>(<span class="cm-string">&quot;Elegí 1: piedra, 2: papel o 3: tijera. Cancelar para salir.&quot;</span>);
+    <span class="cm-variable-2">eleccion</span> <span class="cm-operator">=</span> <span class="cm-variable">parseInt</span>(
 
-    <span class="cm-keyword">if</span> (<span class="cm-variable-2">entradaJugada</span> <span class="cm-operator">===</span> <span class="cm-atom">null</span>) {
+      <span class="cm-variable">prompt</span>(<span class="cm-string">'Ingrese un numero para jugar: 1 piedra, 2 papel, 3 para tijera'</span>)
 
-      <span class="cm-keyword">return</span> <span class="cm-atom">null</span>;
+    )
 
-    }
+  } <span class="cm-keyword">while</span> (<span class="cm-operator">!</span><span class="cm-variable">validarJugada</span>(<span class="cm-variable-2">eleccion</span>))
 
-    <span class="cm-variable-2">numeroJugada</span> <span class="cm-operator">=</span> <span class="cm-variable">Number</span>(<span class="cm-variable-2">entradaJugada</span>);
-
-    <span class="cm-keyword">if</span> (<span class="cm-operator">!</span><span class="cm-variable">validarJugada</span>(<span class="cm-variable-2">numeroJugada</span>)) {
-
-      <span class="cm-variable">alert</span>(<span class="cm-string">&quot;Ingresá un número entero entre 1 y 3.&quot;</span>);
-
-    }
-
-  } <span class="cm-keyword">while</span> (<span class="cm-operator">!</span><span class="cm-variable">validarJugada</span>(<span class="cm-variable-2">numeroJugada</span>));
-
-  <span class="cm-keyword">return</span> <span class="cm-variable-2">numeroJugada</span>;
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">eleccion</span>
 
 }
 
 
 
-<span class="cm-keyword">function</span> <span class="cm-def">generarJugadaComputadora</span>() {
-
-  <span class="cm-keyword">return</span> <span class="cm-variable">Math</span>.<span class="cm-property">floor</span>(<span class="cm-variable">Math</span>.<span class="cm-property">random</span>() <span class="cm-operator">*</span> <span class="cm-number">3</span>) <span class="cm-operator">+</span> <span class="cm-number">1</span>;
-
-}
-
-
-
-<span class="cm-keyword">function</span> <span class="cm-def">obtenerNombreJugada</span>(<span class="cm-def">numeroJugada</span>) {
-
-  <span class="cm-keyword">const</span> <span class="cm-def">opcionesJuego</span> <span class="cm-operator">=</span> [<span class="cm-string">&quot;Piedra&quot;</span>, <span class="cm-string">&quot;Papel&quot;</span>, <span class="cm-string">&quot;Tijera&quot;</span>];
-
-  <span class="cm-keyword">return</span> <span class="cm-variable-2">opcionesJuego</span>[<span class="cm-variable-2">numeroJugada</span> <span class="cm-operator">-</span> <span class="cm-number">1</span>];
-
-}
-
-
-
-<span class="cm-keyword">function</span> <span class="cm-def">compararJugadas</span>(<span class="cm-def">jugadaJugador</span>, <span class="cm-def">jugadaComputadora</span>) {
-
-  <span class="cm-keyword">if</span> (<span class="cm-variable-2">jugadaJugador</span> <span class="cm-operator">===</span> <span class="cm-variable-2">jugadaComputadora</span>) {
-
-    <span class="cm-keyword">return</span> <span class="cm-string">&quot;Empate&quot;</span>;
-
-  }
-
-  <span class="cm-keyword">if</span> (
-
-    (<span class="cm-variable-2">jugadaJugador</span> <span class="cm-operator">===</span> <span class="cm-number">1</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">jugadaComputadora</span> <span class="cm-operator">===</span> <span class="cm-number">3</span>) <span class="cm-operator">||</span>
-
-    (<span class="cm-variable-2">jugadaJugador</span> <span class="cm-operator">===</span> <span class="cm-number">2</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">jugadaComputadora</span> <span class="cm-operator">===</span> <span class="cm-number">1</span>) <span class="cm-operator">||</span>
-
-    (<span class="cm-variable-2">jugadaJugador</span> <span class="cm-operator">===</span> <span class="cm-number">3</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">jugadaComputadora</span> <span class="cm-operator">===</span> <span class="cm-number">2</span>)
-
-  ) {
-
-    <span class="cm-keyword">return</span> <span class="cm-string">&quot;Victoria&quot;</span>;
-
-  }
-
-  <span class="cm-keyword">return</span> <span class="cm-string">&quot;Derrota&quot;</span>;
-
-}
-
-
-
-<span class="cm-keyword">function</span> <span class="cm-def">crearJugador</span>(<span class="cm-def">nombreJugador</span>) {
-
-  <span class="cm-keyword">return</span> {
-
-    <span class="cm-property">nombre</span>: <span class="cm-variable-2">nombreJugador</span>,
-
-    <span class="cm-property">victorias</span>: <span class="cm-number">0</span>
-
-  };
-
-}
-
-
-
-<span class="cm-keyword">function</span> <span class="cm-def">registrarResultado</span>(<span class="cm-def">jugador</span>, <span class="cm-def">computadora</span>, <span class="cm-def">resultadoRonda</span>) {
-
-  <span class="cm-keyword">if</span> (<span class="cm-variable-2">resultadoRonda</span> <span class="cm-operator">===</span> <span class="cm-string">&quot;Victoria&quot;</span>) {
-
-    <span class="cm-variable-2">jugador</span>.<span class="cm-property">victorias</span> <span class="cm-operator">=</span> <span class="cm-variable-2">jugador</span>.<span class="cm-property">victorias</span> <span class="cm-operator">+</span> <span class="cm-number">1</span>;
-
-  } <span class="cm-keyword">else</span> <span class="cm-keyword">if</span> (<span class="cm-variable-2">resultadoRonda</span> <span class="cm-operator">===</span> <span class="cm-string">&quot;Derrota&quot;</span>) {
-
-    <span class="cm-variable-2">computadora</span>.<span class="cm-property">victorias</span> <span class="cm-operator">=</span> <span class="cm-variable-2">computadora</span>.<span class="cm-property">victorias</span> <span class="cm-operator">+</span> <span class="cm-number">1</span>;
-
-  }
-
-}
-
-
-
-<span class="cm-keyword">function</span> <span class="cm-def">mostrarHistorial</span>(<span class="cm-def">resultadosRondas</span>) {
-
-  <span class="cm-variable-2">resultadosRondas</span>.<span class="cm-property">forEach</span>(<span class="cm-keyword">function</span>(<span class="cm-def">resultadoRonda</span>, <span class="cm-def">indiceRonda</span>) {
-
-    <span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-string">&quot;Ronda &quot;</span> <span class="cm-operator">+</span> (<span class="cm-variable-2">indiceRonda</span> <span class="cm-operator">+</span> <span class="cm-number">1</span>) <span class="cm-operator">+</span> <span class="cm-string">&quot;: &quot;</span> <span class="cm-operator">+</span> <span class="cm-variable-2">resultadoRonda</span>);
-
-  });
-
-}
-
-
-
-<span class="cm-keyword">function</span> <span class="cm-def">obtenerVictorias</span>(<span class="cm-def">resultadosRondas</span>) {
-
-  <span class="cm-keyword">return</span> <span class="cm-variable-2">resultadosRondas</span>.<span class="cm-property">filter</span>(<span class="cm-keyword">function</span>(<span class="cm-def">resultadoRonda</span>) {
-
-    <span class="cm-keyword">return</span> <span class="cm-variable-2">resultadoRonda</span> <span class="cm-operator">===</span> <span class="cm-string">&quot;Victoria&quot;</span>;
-
-  });
-
-}
-
-
-
-<span class="cm-keyword">function</span> <span class="cm-def">traducirJugadas</span>(<span class="cm-def">jugadasNumericas</span>) {
-
-  <span class="cm-keyword">return</span> <span class="cm-variable-2">jugadasNumericas</span>.<span class="cm-property">map</span>(<span class="cm-keyword">function</span>(<span class="cm-def">numeroJugada</span>) {
-
-    <span class="cm-keyword">return</span> <span class="cm-variable">obtenerNombreJugada</span>(<span class="cm-variable-2">numeroJugada</span>);
-
-  });
-
-}
-
-
-
-<span class="cm-comment">// PROGRAMA PRINCIPAL</span>
-
-<span class="cm-variable">jugarEncuentro</span>();
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">pedirJugada</span>())
 
 </code></pre>
 
-<p>El integrador conecta contratos conocidos. Los empates pueden hacer que haya más de tres rondas: gana quien consigue dos victorias. Mientras exista un empate tras otro el encuentro continúa, y siempre se puede cancelar. Las funciones declaradas pueden llamarse aunque estén escritas más abajo en el archivo.</p>
+<p>La función no retorna hasta recibir una elección que pase el validador. Cancelar se convierte en NaN y vuelve a preguntar.</p>
 
 <p><strong>Probá:</strong></p>
 
-<p>Para una prueba predecible, cambiá temporalmente el cuerpo de generarJugadaComputadora por return 3.</p>
-<p>Nombre Ana; jugadas 3 / 1 / 1 → Empate, Victoria, Victoria; gana Ana, 2 a 0.</p>
-<p>Con la misma computadora fija, 2 / 2 → dos derrotas; gana la computadora, 0 a 2.</p>
-<p>Cancelar el nombre → Inicio cancelado. Cancelar una jugada → marcador parcial, sin ganador.</p>
-<p>Después restaurá la función aleatoria.</p>
+<p>0, hola, 4 y finalmente 2 → tres avisos, cuatro preguntas y resultado 2.</p>
 
-<h2>Cómo se conectan las piezas</h2>
+<h3>Ejercicio 36. Conectar las dos entradas</h3>
 
-<p>1. Entrada y salida: nombre, rival y elección del jugador.</p>
-<p>2. Datos: marcador, objetivo de dos victorias y número aleatorio del 1 al 3.</p>
-<p>3. Funciones: crearSaludo, pedirJugadaSimple y generarJugadaComputadora.</p>
-<p>4. Alternativas: obtenerNombreJugada, validarJugada y compararJugadas.</p>
-<p>5. Repeticiones: pedirJugada mejora la versión simple; pedirNombre completa la bienvenida.</p>
-<p>6. Arreglos: nombres de jugadas, historial y cantidad de victorias.</p>
-<p>7. Métodos: mostrarHistorial, obtenerVictorias y traducirJugadas.</p>
-<p>8. Objetos: crearJugador, registrarResultado y jugarEncuentro.</p>
+<pre class="cm-s-odawi"><code>
+<span class="cm-comment">// FUNCIÓN DADA: usala sin modificarla.</span>
 
-<h2>Contratos para conectar las funciones</h2>
+<span class="cm-keyword">function</span> <span class="cm-def">validarNombre</span>(<span class="cm-def">nombre</span>) {
 
-<p>- crearSaludo(nombreJugador): recibe texto y retorna un saludo; no lo muestra.</p>
-<p>- pedirNombre(): pregunta y retorna un nombre limpio de al menos tres caracteres, o null al cancelar. Validamos longitud, no que contenga solamente letras.</p>
-<p>- validarJugada(numeroJugada): recibe un número y retorna true o false.</p>
-<p>- pedirJugada(): utiliza el validador y retorna 1, 2, 3 o null al cancelar.</p>
-<p>- generarJugadaComputadora(): retorna 1, 2 o 3 al azar.</p>
-<p>- obtenerNombreJugada(numeroJugada): recibe una jugada válida y retorna su nombre. La versión con arreglos supone que pedirJugada ya la validó.</p>
-<p>- compararJugadas(jugadaJugador, jugadaComputadora): recibe dos jugadas válidas y retorna Victoria, Derrota o Empate, desde el punto de vista del jugador.</p>
-<p>- crearJugador(nombreJugador): retorna una ficha con nombre y victorias inicialmente en cero.</p>
-<p>- registrarResultado(jugador, computadora, resultadoRonda): modifica las victorias de las fichas; no necesita retornar un valor.</p>
-<p>- mostrarHistorial(resultadosRondas): muestra cada resultado con forEach.</p>
-<p>- obtenerVictorias(resultadosRondas): retorna un arreglo filtrado; su length indica la cantidad de victorias.</p>
-<p>- traducirJugadas(jugadasNumericas): retorna un arreglo de nombres usando map.</p>
-<p>- jugarEncuentro(): coordina la entrada, las rondas y el resumen.</p>
+  <span class="cm-keyword">if</span> (<span class="cm-variable-2">nombre</span> <span class="cm-operator">==</span> <span class="cm-atom">null</span> <span class="cm-operator">||</span> <span class="cm-variable-2">nombre</span> <span class="cm-operator">==</span> <span class="cm-string">''</span> <span class="cm-operator">||</span> <span class="cm-variable-2">nombre</span>.<span class="cm-property">length</span> <span class="cm-operator">&lt;</span> <span class="cm-number">3</span> <span class="cm-operator">||</span> <span class="cm-operator">!</span><span class="cm-variable">isNaN</span>(<span class="cm-variable-2">nombre</span>)) {
 
-<h2>Relación con el juego del viernes</h2>
+    <span class="cm-variable">alert</span>(<span class="cm-string">'El nombre ingresado debe ser un texto de al menos 3 caracteres'</span>)
 
-<p>El ejemplo de clase junta la obtención de las jugadas y su comparación. En esta práctica, compararJugadas recibe las dos jugadas como parámetros: así se pueden probar sus nueve combinaciones sin depender del azar. jugarEncuentro se ocupa de conseguirlas y pasarlas a la comparación.</p>
+    <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
 
-<p>Los resultados de esta versión son exactamente Victoria, Derrota y Empate. No se mezclan con los mensajes con emojis del ejemplo original: el historial, el filtro y el marcador comparten los mismos textos.</p>
+  }
 
-<p>Al mejor de tres significa alcanzar dos victorias. Los empates no suman, por lo que puede haber más de tres rondas. Cancelar termina el encuentro sin anunciar un ganador y conserva la salida del marcador parcial.</p>
+  <span class="cm-keyword">return</span> <span class="cm-atom">true</span>
 
-<p>Para probar el integrador, reemplazá temporalmente el retorno de generarJugadaComputadora por 3: con las jugadas 3, 1 y 1 deben aparecer Empate, Victoria y Victoria. Después restaurá el número aleatorio. Probá también perder, cancelar y corregir una entrada inválida.</p>
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">iniciarJuego</span>() {
+
+  <span class="cm-variable">alert</span>(<span class="cm-string">'Bienvenido al piedra, papel o tijera de Front 2 :D'</span>)
+
+
+
+  <span class="cm-keyword">let</span> <span class="cm-def">nombre</span>
+
+
+
+  <span class="cm-keyword">do</span> {
+
+    <span class="cm-variable-2">nombre</span> <span class="cm-operator">=</span> <span class="cm-variable">prompt</span>(<span class="cm-string">'Ingrese su nombre por favor: '</span>)
+
+  } <span class="cm-keyword">while</span> (<span class="cm-operator">!</span><span class="cm-variable">validarNombre</span>(<span class="cm-variable-2">nombre</span>))
+
+
+
+  <span class="cm-variable">alert</span>(<span class="cm-string">'Gracias por jugar '</span> <span class="cm-operator">+</span> <span class="cm-variable-2">nombre</span> <span class="cm-operator">+</span> <span class="cm-string">'. Mucha suerte'</span>)
+
+  <span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-string">'El jugador es: '</span> <span class="cm-operator">+</span> <span class="cm-variable-2">nombre</span>)
+
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">nombre</span>.<span class="cm-property">toLocaleUpperCase</span>()
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">validarJugada</span>(<span class="cm-def">eleccion</span>) {
+
+  <span class="cm-keyword">if</span> (<span class="cm-operator">!</span><span class="cm-variable">isNaN</span>(<span class="cm-variable-2">eleccion</span>) <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccion</span> <span class="cm-operator">&gt;</span> <span class="cm-number">0</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccion</span> <span class="cm-operator">&lt;</span> <span class="cm-number">4</span>) {
+
+    <span class="cm-keyword">return</span> <span class="cm-atom">true</span>
+
+  }
+
+  <span class="cm-variable">alert</span>(<span class="cm-string">'Ingrese un NUMERO entre 1 y 3'</span>)
+
+  <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">pedirJugada</span>() {
+
+  <span class="cm-keyword">let</span> <span class="cm-def">eleccion</span> <span class="cm-operator">=</span> <span class="cm-number">0</span>
+
+  <span class="cm-comment">//1 piedra, 2 papel, 3 para tijera</span>
+
+  <span class="cm-keyword">do</span> {
+
+    <span class="cm-variable-2">eleccion</span> <span class="cm-operator">=</span> <span class="cm-variable">parseInt</span>(
+
+      <span class="cm-variable">prompt</span>(<span class="cm-string">'Ingrese un numero para jugar: 1 piedra, 2 papel, 3 para tijera'</span>)
+
+    )
+
+  } <span class="cm-keyword">while</span> (<span class="cm-operator">!</span><span class="cm-variable">validarJugada</span>(<span class="cm-variable-2">eleccion</span>))
+
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">eleccion</span>
+
+}
+
+
+
+<span class="cm-keyword">const</span> <span class="cm-def">nombreJugador</span> <span class="cm-operator">=</span> <span class="cm-variable">iniciarJuego</span>()
+
+<span class="cm-variable">alert</span>(<span class="cm-string">'Gracias por jugar :'</span> <span class="cm-operator">+</span> <span class="cm-variable">nombreJugador</span>)
+
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">pedirJugada</span>())
+
+</code></pre>
+
+<p>Las definiciones incluidas son las resoluciones de las actividades anteriores. Vos escribís la coordinación.</p>
+
+<p><strong>Probá:</strong></p>
+
+<p>Al, Ana, 0, 3 → corrige el nombre, corrige la jugada y termina mostrando 3.</p>
+
+<h2>Etapa 13. La jugada de la PC</h2>
+
+<h3>Ejercicio 37. Observar el azar</h3>
+
+<pre class="cm-s-odawi"><code>
+<span class="cm-keyword">function</span> <span class="cm-def">jugadaRandom</span>() {
+
+  <span class="cm-keyword">let</span> <span class="cm-def">numero</span> <span class="cm-operator">=</span> <span class="cm-variable">Math</span>.<span class="cm-property">random</span>()
+
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">numero</span>
+
+}
+
+
+
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">jugadaRandom</span>())
+
+</code></pre>
+
+<p>Cada ejecución puede producir un valor diferente. No se espera un resultado concreto.</p>
+
+<p><strong>Probá:</strong></p>
+
+<p>Podrías obtener 0.17 o 0.82. Todavía no son jugadas.</p>
+
+<h3>Ejercicio 38. Transformar el intervalo</h3>
+
+<pre class="cm-s-odawi"><code>
+<span class="cm-keyword">function</span> <span class="cm-def">jugadaRandom</span>() {
+
+  <span class="cm-keyword">let</span> <span class="cm-def">numero</span> <span class="cm-operator">=</span> <span class="cm-variable">Math</span>.<span class="cm-property">random</span>() <span class="cm-operator">*</span> <span class="cm-number">3</span> <span class="cm-operator">+</span> <span class="cm-number">1</span>
+
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">numero</span>
+
+}
+
+
+
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">jugadaRandom</span>())
+
+</code></pre>
+
+<p>Todavía pueden aparecer decimales. El siguiente paso completa la expresión del ejemplo.</p>
+
+<p><strong>Probá:</strong></p>
+
+<p>Siempre debe ser &gt;= 1 y &lt; 4; por ejemplo, 1.51 o 3.8.</p>
+
+<h3>Ejercicio 39. Retornar 1, 2 o 3</h3>
+
+<pre class="cm-s-odawi"><code>
+<span class="cm-keyword">function</span> <span class="cm-def">jugadaRandom</span>() {
+
+  <span class="cm-keyword">let</span> <span class="cm-def">numero</span> <span class="cm-operator">=</span> <span class="cm-variable">parseInt</span>(<span class="cm-variable">Math</span>.<span class="cm-property">random</span>() <span class="cm-operator">*</span> <span class="cm-number">3</span> <span class="cm-operator">+</span> <span class="cm-number">1</span>)
+
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">numero</span>
+
+}
+
+
+
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">jugadaRandom</span>())
+
+</code></pre>
+
+<p>Los tres intervalos se convierten en las tres opciones del rival.</p>
+
+<p><strong>Probá:</strong></p>
+
+<p>Solo 1, 2 o 3. Pueden repetirse; no tienen que aparecer todos en pocas pruebas.</p>
+
+<h2>Etapa 14. Preparar la comparación</h2>
+
+<h3>Ejercicio 40. Guardar los resultados</h3>
+
+<pre class="cm-s-odawi"><code>
+<span class="cm-keyword">function</span> <span class="cm-def">compararJugadas</span>() {
+
+  <span class="cm-keyword">const</span> <span class="cm-def">resultadosPosibles</span> <span class="cm-operator">=</span> [
+
+    <span class="cm-string">'Gana el jugador 👶🏻'</span>, <span class="cm-comment">//Posicion 0 gano</span>
+
+    <span class="cm-string">'Empate 🫱🏻🫲🏻'</span>, <span class="cm-comment">//posicion 1 empate</span>
+
+    <span class="cm-string">'Gana la PC 🤖'</span> <span class="cm-comment">// posicion 2 gana pc</span>
+
+  ]
+
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">resultadosPosibles</span>[<span class="cm-number">1</span>]
+
+}
+
+
+
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">compararJugadas</span>())
+
+</code></pre>
+
+<p>El retorno fijo es solo una prueba del arreglo. En los próximos pasos la jugada decidirá la posición.</p>
+
+<p><strong>Probá:</strong></p>
+
+<p>Posición 0 → Gana el jugador 👶🏻; 1 → Empate 🫱🏻🫲🏻; 2 → Gana la PC 🤖.</p>
+
+<h3>Ejercicio 41. Obtener ambas jugadas</h3>
+
+<pre class="cm-s-odawi"><code>
+<span class="cm-keyword">function</span> <span class="cm-def">validarJugada</span>(<span class="cm-def">eleccion</span>) {
+
+  <span class="cm-keyword">if</span> (<span class="cm-operator">!</span><span class="cm-variable">isNaN</span>(<span class="cm-variable-2">eleccion</span>) <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccion</span> <span class="cm-operator">&gt;</span> <span class="cm-number">0</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccion</span> <span class="cm-operator">&lt;</span> <span class="cm-number">4</span>) {
+
+    <span class="cm-keyword">return</span> <span class="cm-atom">true</span>
+
+  }
+
+  <span class="cm-variable">alert</span>(<span class="cm-string">'Ingrese un NUMERO entre 1 y 3'</span>)
+
+  <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">pedirJugada</span>() {
+
+  <span class="cm-keyword">let</span> <span class="cm-def">eleccion</span> <span class="cm-operator">=</span> <span class="cm-number">0</span>
+
+  <span class="cm-comment">//1 piedra, 2 papel, 3 para tijera</span>
+
+  <span class="cm-keyword">do</span> {
+
+    <span class="cm-variable-2">eleccion</span> <span class="cm-operator">=</span> <span class="cm-variable">parseInt</span>(
+
+      <span class="cm-variable">prompt</span>(<span class="cm-string">'Ingrese un numero para jugar: 1 piedra, 2 papel, 3 para tijera'</span>)
+
+    )
+
+  } <span class="cm-keyword">while</span> (<span class="cm-operator">!</span><span class="cm-variable">validarJugada</span>(<span class="cm-variable-2">eleccion</span>))
+
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">eleccion</span>
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">jugadaRandom</span>() {
+
+  <span class="cm-keyword">let</span> <span class="cm-def">numero</span> <span class="cm-operator">=</span> <span class="cm-variable">parseInt</span>(<span class="cm-variable">Math</span>.<span class="cm-property">random</span>() <span class="cm-operator">*</span> <span class="cm-number">3</span> <span class="cm-operator">+</span> <span class="cm-number">1</span>)
+
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">numero</span>
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">compararJugadas</span>() {
+
+  <span class="cm-comment">//1 piedra, 2 papel, 3 para tijera</span>
+
+  <span class="cm-keyword">const</span> <span class="cm-def">resultadosPosibles</span> <span class="cm-operator">=</span> [
+
+    <span class="cm-string">'Gana el jugador 👶🏻'</span>, <span class="cm-comment">//Posicion 0 gano</span>
+
+    <span class="cm-string">'Empate 🫱🏻🫲🏻'</span>, <span class="cm-comment">//posicion 1 empate</span>
+
+    <span class="cm-string">'Gana la PC 🤖'</span> <span class="cm-comment">// posicion 2 gana pc</span>
+
+  ]
+
+  <span class="cm-keyword">const</span> <span class="cm-def">eleccionJugador</span> <span class="cm-operator">=</span> <span class="cm-variable">pedirJugada</span>()
+
+  <span class="cm-keyword">const</span> <span class="cm-def">eleccionComputadora</span> <span class="cm-operator">=</span> <span class="cm-variable">jugadaRandom</span>()
+
+  <span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-string">'Jugada de la PC: '</span> <span class="cm-operator">+</span> <span class="cm-variable-2">eleccionComputadora</span>)
+
+
+
+}
+
+
+
+<span class="cm-variable">compararJugadas</span>()
+
+</code></pre>
+
+<p>compararJugadas consigue los datos que necesita. No recibe jugadas como parámetros.</p>
+
+<p><strong>Probá:</strong></p>
+
+<p>Ingresá 1: aparece Jugada de la PC: con 1, 2 o 3. Todavía no se anuncia ganador.</p>
+
+<h3>Ejercicio 42. Resolver el empate</h3>
+
+<pre class="cm-s-odawi"><code>
+<span class="cm-keyword">function</span> <span class="cm-def">validarJugada</span>(<span class="cm-def">eleccion</span>) {
+
+  <span class="cm-keyword">if</span> (<span class="cm-operator">!</span><span class="cm-variable">isNaN</span>(<span class="cm-variable-2">eleccion</span>) <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccion</span> <span class="cm-operator">&gt;</span> <span class="cm-number">0</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccion</span> <span class="cm-operator">&lt;</span> <span class="cm-number">4</span>) {
+
+    <span class="cm-keyword">return</span> <span class="cm-atom">true</span>
+
+  }
+
+  <span class="cm-variable">alert</span>(<span class="cm-string">'Ingrese un NUMERO entre 1 y 3'</span>)
+
+  <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">pedirJugada</span>() {
+
+  <span class="cm-keyword">let</span> <span class="cm-def">eleccion</span> <span class="cm-operator">=</span> <span class="cm-number">0</span>
+
+  <span class="cm-comment">//1 piedra, 2 papel, 3 para tijera</span>
+
+  <span class="cm-keyword">do</span> {
+
+    <span class="cm-variable-2">eleccion</span> <span class="cm-operator">=</span> <span class="cm-variable">parseInt</span>(
+
+      <span class="cm-variable">prompt</span>(<span class="cm-string">'Ingrese un numero para jugar: 1 piedra, 2 papel, 3 para tijera'</span>)
+
+    )
+
+  } <span class="cm-keyword">while</span> (<span class="cm-operator">!</span><span class="cm-variable">validarJugada</span>(<span class="cm-variable-2">eleccion</span>))
+
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">eleccion</span>
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">jugadaRandom</span>() {
+
+  <span class="cm-keyword">let</span> <span class="cm-def">numero</span> <span class="cm-operator">=</span> <span class="cm-variable">parseInt</span>(<span class="cm-variable">Math</span>.<span class="cm-property">random</span>() <span class="cm-operator">*</span> <span class="cm-number">3</span> <span class="cm-operator">+</span> <span class="cm-number">1</span>)
+
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">numero</span>
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">compararJugadas</span>() {
+
+  <span class="cm-comment">//1 piedra, 2 papel, 3 para tijera</span>
+
+  <span class="cm-keyword">const</span> <span class="cm-def">resultadosPosibles</span> <span class="cm-operator">=</span> [
+
+    <span class="cm-string">'Gana el jugador 👶🏻'</span>, <span class="cm-comment">//Posicion 0 gano</span>
+
+    <span class="cm-string">'Empate 🫱🏻🫲🏻'</span>, <span class="cm-comment">//posicion 1 empate</span>
+
+    <span class="cm-string">'Gana la PC 🤖'</span> <span class="cm-comment">// posicion 2 gana pc</span>
+
+  ]
+
+  <span class="cm-keyword">const</span> <span class="cm-def">eleccionJugador</span> <span class="cm-operator">=</span> <span class="cm-variable">pedirJugada</span>()
+
+  <span class="cm-keyword">const</span> <span class="cm-def">eleccionComputadora</span> <span class="cm-operator">=</span> <span class="cm-variable">jugadaRandom</span>()
+
+  <span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-string">'Jugada de la PC: '</span> <span class="cm-operator">+</span> <span class="cm-variable-2">eleccionComputadora</span>)
+
+
+
+  <span class="cm-keyword">if</span> (<span class="cm-variable-2">eleccionJugador</span> <span class="cm-operator">==</span> <span class="cm-variable-2">eleccionComputadora</span>) {
+
+    <span class="cm-keyword">return</span> <span class="cm-variable-2">resultadosPosibles</span>[<span class="cm-number">1</span>]
+
+  }
+
+}
+
+
+
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">compararJugadas</span>())
+
+</code></pre>
+
+<p>El return termina la comparación cuando hay empate. undefined en los otros casos indica la parte que todavía falta construir.</p>
+
+<p><strong>Probá:</strong></p>
+
+<p>Ambos 2 → Empate 🫱🏻🫲🏻. Si son distintos, esta versión parcial devuelve undefined.</p>
+
+<h2>Etapa 15. Completar la partida</h2>
+
+<h3>Ejercicio 43. Reconocer las victorias</h3>
+
+<pre class="cm-s-odawi"><code>
+<span class="cm-keyword">function</span> <span class="cm-def">validarJugada</span>(<span class="cm-def">eleccion</span>) {
+
+  <span class="cm-keyword">if</span> (<span class="cm-operator">!</span><span class="cm-variable">isNaN</span>(<span class="cm-variable-2">eleccion</span>) <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccion</span> <span class="cm-operator">&gt;</span> <span class="cm-number">0</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccion</span> <span class="cm-operator">&lt;</span> <span class="cm-number">4</span>) {
+
+    <span class="cm-keyword">return</span> <span class="cm-atom">true</span>
+
+  }
+
+  <span class="cm-variable">alert</span>(<span class="cm-string">'Ingrese un NUMERO entre 1 y 3'</span>)
+
+  <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">pedirJugada</span>() {
+
+  <span class="cm-keyword">let</span> <span class="cm-def">eleccion</span> <span class="cm-operator">=</span> <span class="cm-number">0</span>
+
+  <span class="cm-comment">//1 piedra, 2 papel, 3 para tijera</span>
+
+  <span class="cm-keyword">do</span> {
+
+    <span class="cm-variable-2">eleccion</span> <span class="cm-operator">=</span> <span class="cm-variable">parseInt</span>(
+
+      <span class="cm-variable">prompt</span>(<span class="cm-string">'Ingrese un numero para jugar: 1 piedra, 2 papel, 3 para tijera'</span>)
+
+    )
+
+  } <span class="cm-keyword">while</span> (<span class="cm-operator">!</span><span class="cm-variable">validarJugada</span>(<span class="cm-variable-2">eleccion</span>))
+
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">eleccion</span>
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">jugadaRandom</span>() {
+
+  <span class="cm-keyword">let</span> <span class="cm-def">numero</span> <span class="cm-operator">=</span> <span class="cm-variable">parseInt</span>(<span class="cm-variable">Math</span>.<span class="cm-property">random</span>() <span class="cm-operator">*</span> <span class="cm-number">3</span> <span class="cm-operator">+</span> <span class="cm-number">1</span>)
+
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">numero</span>
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">compararJugadas</span>() {
+
+  <span class="cm-comment">//1 piedra, 2 papel, 3 para tijera</span>
+
+  <span class="cm-keyword">const</span> <span class="cm-def">resultadosPosibles</span> <span class="cm-operator">=</span> [
+
+    <span class="cm-string">'Gana el jugador 👶🏻'</span>, <span class="cm-comment">//Posicion 0 gano</span>
+
+    <span class="cm-string">'Empate 🫱🏻🫲🏻'</span>, <span class="cm-comment">//posicion 1 empate</span>
+
+    <span class="cm-string">'Gana la PC 🤖'</span> <span class="cm-comment">// posicion 2 gana pc</span>
+
+  ]
+
+  <span class="cm-keyword">const</span> <span class="cm-def">eleccionJugador</span> <span class="cm-operator">=</span> <span class="cm-variable">pedirJugada</span>()
+
+  <span class="cm-keyword">const</span> <span class="cm-def">eleccionComputadora</span> <span class="cm-operator">=</span> <span class="cm-variable">jugadaRandom</span>()
+
+  <span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-string">'Jugada de la PC: '</span> <span class="cm-operator">+</span> <span class="cm-variable-2">eleccionComputadora</span>)
+
+
+
+  <span class="cm-keyword">if</span> (<span class="cm-variable-2">eleccionJugador</span> <span class="cm-operator">==</span> <span class="cm-variable-2">eleccionComputadora</span>) {
+
+    <span class="cm-keyword">return</span> <span class="cm-variable-2">resultadosPosibles</span>[<span class="cm-number">1</span>]
+
+  } <span class="cm-keyword">else</span> <span class="cm-keyword">if</span> (
+
+    (<span class="cm-variable-2">eleccionJugador</span> <span class="cm-operator">==</span> <span class="cm-number">1</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccionComputadora</span> <span class="cm-operator">==</span> <span class="cm-number">3</span>) <span class="cm-operator">||</span>
+
+    (<span class="cm-variable-2">eleccionJugador</span> <span class="cm-operator">==</span> <span class="cm-number">2</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccionComputadora</span> <span class="cm-operator">==</span> <span class="cm-number">1</span>) <span class="cm-operator">||</span>
+
+    (<span class="cm-variable-2">eleccionJugador</span> <span class="cm-operator">==</span> <span class="cm-number">3</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccionComputadora</span> <span class="cm-operator">==</span> <span class="cm-number">2</span>)
+
+  ) {
+
+    <span class="cm-keyword">return</span> <span class="cm-variable-2">resultadosPosibles</span>[<span class="cm-number">0</span>]
+
+  }
+
+}
+
+
+
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">compararJugadas</span>())
+
+</code></pre>
+
+<p>La plantilla usa false como lugar temporal para que puedas escribir la condición. Reemplazá también ese false. La solución retorna la posición 0 solo cuando gana el jugador.</p>
+
+<p><strong>Probá:</strong></p>
+
+<p>Fijá temporalmente la PC en 3: jugador 1 → Gana el jugador 👶🏻; jugador 3 → empate. La derrota aún devuelve undefined.</p>
+
+<h3>Ejercicio 44. Derrota por descarte</h3>
+
+<pre class="cm-s-odawi"><code>
+<span class="cm-keyword">function</span> <span class="cm-def">validarJugada</span>(<span class="cm-def">eleccion</span>) {
+
+  <span class="cm-keyword">if</span> (<span class="cm-operator">!</span><span class="cm-variable">isNaN</span>(<span class="cm-variable-2">eleccion</span>) <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccion</span> <span class="cm-operator">&gt;</span> <span class="cm-number">0</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccion</span> <span class="cm-operator">&lt;</span> <span class="cm-number">4</span>) {
+
+    <span class="cm-keyword">return</span> <span class="cm-atom">true</span>
+
+  }
+
+  <span class="cm-variable">alert</span>(<span class="cm-string">'Ingrese un NUMERO entre 1 y 3'</span>)
+
+  <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">pedirJugada</span>() {
+
+  <span class="cm-keyword">let</span> <span class="cm-def">eleccion</span> <span class="cm-operator">=</span> <span class="cm-number">0</span>
+
+  <span class="cm-comment">//1 piedra, 2 papel, 3 para tijera</span>
+
+  <span class="cm-keyword">do</span> {
+
+    <span class="cm-variable-2">eleccion</span> <span class="cm-operator">=</span> <span class="cm-variable">parseInt</span>(
+
+      <span class="cm-variable">prompt</span>(<span class="cm-string">'Ingrese un numero para jugar: 1 piedra, 2 papel, 3 para tijera'</span>)
+
+    )
+
+  } <span class="cm-keyword">while</span> (<span class="cm-operator">!</span><span class="cm-variable">validarJugada</span>(<span class="cm-variable-2">eleccion</span>))
+
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">eleccion</span>
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">jugadaRandom</span>() {
+
+  <span class="cm-keyword">let</span> <span class="cm-def">numero</span> <span class="cm-operator">=</span> <span class="cm-variable">parseInt</span>(<span class="cm-variable">Math</span>.<span class="cm-property">random</span>() <span class="cm-operator">*</span> <span class="cm-number">3</span> <span class="cm-operator">+</span> <span class="cm-number">1</span>)
+
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">numero</span>
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">compararJugadas</span>() {
+
+  <span class="cm-comment">//1 piedra, 2 papel, 3 para tijera</span>
+
+  <span class="cm-keyword">const</span> <span class="cm-def">resultadosPosibles</span> <span class="cm-operator">=</span> [
+
+    <span class="cm-string">'Gana el jugador 👶🏻'</span>, <span class="cm-comment">//Posicion 0 gano</span>
+
+    <span class="cm-string">'Empate 🫱🏻🫲🏻'</span>, <span class="cm-comment">//posicion 1 empate</span>
+
+    <span class="cm-string">'Gana la PC 🤖'</span> <span class="cm-comment">// posicion 2 gana pc</span>
+
+  ]
+
+  <span class="cm-keyword">const</span> <span class="cm-def">eleccionJugador</span> <span class="cm-operator">=</span> <span class="cm-variable">pedirJugada</span>()
+
+  <span class="cm-keyword">const</span> <span class="cm-def">eleccionComputadora</span> <span class="cm-operator">=</span> <span class="cm-variable">jugadaRandom</span>()
+
+  <span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-string">'Jugada de la PC: '</span> <span class="cm-operator">+</span> <span class="cm-variable-2">eleccionComputadora</span>)
+
+
+
+  <span class="cm-keyword">if</span> (<span class="cm-variable-2">eleccionJugador</span> <span class="cm-operator">==</span> <span class="cm-variable-2">eleccionComputadora</span>) {
+
+    <span class="cm-keyword">return</span> <span class="cm-variable-2">resultadosPosibles</span>[<span class="cm-number">1</span>]
+
+  } <span class="cm-keyword">else</span> <span class="cm-keyword">if</span> (
+
+    (<span class="cm-variable-2">eleccionJugador</span> <span class="cm-operator">==</span> <span class="cm-number">1</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccionComputadora</span> <span class="cm-operator">==</span> <span class="cm-number">3</span>) <span class="cm-operator">||</span>
+
+    (<span class="cm-variable-2">eleccionJugador</span> <span class="cm-operator">==</span> <span class="cm-number">2</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccionComputadora</span> <span class="cm-operator">==</span> <span class="cm-number">1</span>) <span class="cm-operator">||</span>
+
+    (<span class="cm-variable-2">eleccionJugador</span> <span class="cm-operator">==</span> <span class="cm-number">3</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccionComputadora</span> <span class="cm-operator">==</span> <span class="cm-number">2</span>)
+
+  ) {
+
+    <span class="cm-keyword">return</span> <span class="cm-variable-2">resultadosPosibles</span>[<span class="cm-number">0</span>]
+
+  }
+
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">resultadosPosibles</span>[<span class="cm-number">2</span>]
+
+}
+
+
+
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">compararJugadas</span>())
+
+</code></pre>
+
+<p>Si no hubo empate ni victoria del jugador, gana la PC. compararJugadas ya está completa.</p>
+
+<p><strong>Probá:</strong></p>
+
+<p>Jugador/PC: 1/1 empate, 1/2 PC, 1/3 jugador; 2/1 jugador, 2/2 empate, 2/3 PC; 3/1 PC, 3/2 jugador, 3/3 empate.</p>
+
+<h3>Ejercicio 45. El programa de clase</h3>
+
+<pre class="cm-s-odawi"><code>
+<span class="cm-keyword">function</span> <span class="cm-def">iniciarJuego</span>() {
+
+  <span class="cm-variable">alert</span>(<span class="cm-string">'Bienvenido al piedra, papel o tijera de Front 2 :D'</span>)
+
+
+
+  <span class="cm-keyword">let</span> <span class="cm-def">nombre</span>
+
+
+
+  <span class="cm-keyword">do</span> {
+
+    <span class="cm-variable-2">nombre</span> <span class="cm-operator">=</span> <span class="cm-variable">prompt</span>(<span class="cm-string">'Ingrese su nombre por favor: '</span>)
+
+  } <span class="cm-keyword">while</span> (<span class="cm-operator">!</span><span class="cm-variable">validarNombre</span>(<span class="cm-variable-2">nombre</span>))
+
+
+
+  <span class="cm-variable">alert</span>(<span class="cm-string">'Gracias por jugar '</span> <span class="cm-operator">+</span> <span class="cm-variable-2">nombre</span> <span class="cm-operator">+</span> <span class="cm-string">'. Mucha suerte'</span>)
+
+  <span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-string">'El jugador es: '</span> <span class="cm-operator">+</span> <span class="cm-variable-2">nombre</span>)
+
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">nombre</span>.<span class="cm-property">toLocaleUpperCase</span>()
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">pedirJugada</span>() {
+
+  <span class="cm-keyword">let</span> <span class="cm-def">eleccion</span> <span class="cm-operator">=</span> <span class="cm-number">0</span>
+
+  <span class="cm-comment">//1 piedra, 2 papel, 3 para tijera</span>
+
+  <span class="cm-keyword">do</span> {
+
+    <span class="cm-variable-2">eleccion</span> <span class="cm-operator">=</span> <span class="cm-variable">parseInt</span>(
+
+      <span class="cm-variable">prompt</span>(<span class="cm-string">'Ingrese un numero para jugar: 1 piedra, 2 papel, 3 para tijera'</span>)
+
+    )
+
+  } <span class="cm-keyword">while</span> (<span class="cm-operator">!</span><span class="cm-variable">validarJugada</span>(<span class="cm-variable-2">eleccion</span>))
+
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">eleccion</span>
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">jugadaRandom</span>() {
+
+  <span class="cm-keyword">let</span> <span class="cm-def">numero</span> <span class="cm-operator">=</span> <span class="cm-variable">parseInt</span>(<span class="cm-variable">Math</span>.<span class="cm-property">random</span>() <span class="cm-operator">*</span> <span class="cm-number">3</span> <span class="cm-operator">+</span> <span class="cm-number">1</span>)
+
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">numero</span>
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">compararJugadas</span>() {
+
+  <span class="cm-comment">//1 piedra, 2 papel, 3 para tijera</span>
+
+  <span class="cm-keyword">const</span> <span class="cm-def">resultadosPosibles</span> <span class="cm-operator">=</span> [
+
+    <span class="cm-string">'Gana el jugador 👶🏻'</span>, <span class="cm-comment">//Posicion 0 gano</span>
+
+    <span class="cm-string">'Empate 🫱🏻🫲🏻'</span>, <span class="cm-comment">//posicion 1 empate</span>
+
+    <span class="cm-string">'Gana la PC 🤖'</span> <span class="cm-comment">// posicion 2 gana pc</span>
+
+  ]
+
+  <span class="cm-keyword">const</span> <span class="cm-def">eleccionJugador</span> <span class="cm-operator">=</span> <span class="cm-variable">pedirJugada</span>()
+
+  <span class="cm-keyword">const</span> <span class="cm-def">eleccionComputadora</span> <span class="cm-operator">=</span> <span class="cm-variable">jugadaRandom</span>()
+
+  <span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-string">'Jugada de la PC: '</span> <span class="cm-operator">+</span> <span class="cm-variable-2">eleccionComputadora</span>)
+
+
+
+  <span class="cm-keyword">if</span> (<span class="cm-variable-2">eleccionJugador</span> <span class="cm-operator">==</span> <span class="cm-variable-2">eleccionComputadora</span>) {
+
+    <span class="cm-keyword">return</span> <span class="cm-variable-2">resultadosPosibles</span>[<span class="cm-number">1</span>]
+
+  } <span class="cm-keyword">else</span> <span class="cm-keyword">if</span> (
+
+    (<span class="cm-variable-2">eleccionJugador</span> <span class="cm-operator">==</span> <span class="cm-number">1</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccionComputadora</span> <span class="cm-operator">==</span> <span class="cm-number">3</span>) <span class="cm-operator">||</span>
+
+    (<span class="cm-variable-2">eleccionJugador</span> <span class="cm-operator">==</span> <span class="cm-number">2</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccionComputadora</span> <span class="cm-operator">==</span> <span class="cm-number">1</span>) <span class="cm-operator">||</span>
+
+    (<span class="cm-variable-2">eleccionJugador</span> <span class="cm-operator">==</span> <span class="cm-number">3</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccionComputadora</span> <span class="cm-operator">==</span> <span class="cm-number">2</span>)
+
+  ) {
+
+    <span class="cm-keyword">return</span> <span class="cm-variable-2">resultadosPosibles</span>[<span class="cm-number">0</span>]
+
+  }
+
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">resultadosPosibles</span>[<span class="cm-number">2</span>]
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">validarNombre</span>(<span class="cm-def">nombre</span>) {
+
+  <span class="cm-keyword">if</span> (<span class="cm-variable-2">nombre</span> <span class="cm-operator">==</span> <span class="cm-atom">null</span> <span class="cm-operator">||</span> <span class="cm-variable-2">nombre</span> <span class="cm-operator">==</span> <span class="cm-string">''</span> <span class="cm-operator">||</span> <span class="cm-variable-2">nombre</span>.<span class="cm-property">length</span> <span class="cm-operator">&lt;</span> <span class="cm-number">3</span> <span class="cm-operator">||</span> <span class="cm-operator">!</span><span class="cm-variable">isNaN</span>(<span class="cm-variable-2">nombre</span>)) {
+
+    <span class="cm-variable">alert</span>(<span class="cm-string">'El nombre ingresado debe ser un texto de al menos 3 caracteres'</span>)
+
+    <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
+
+  }
+
+  <span class="cm-keyword">return</span> <span class="cm-atom">true</span>
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">validarJugada</span>(<span class="cm-def">eleccion</span>) {
+
+  <span class="cm-keyword">if</span> (<span class="cm-operator">!</span><span class="cm-variable">isNaN</span>(<span class="cm-variable-2">eleccion</span>) <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccion</span> <span class="cm-operator">&gt;</span> <span class="cm-number">0</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccion</span> <span class="cm-operator">&lt;</span> <span class="cm-number">4</span>) {
+
+    <span class="cm-keyword">return</span> <span class="cm-atom">true</span>
+
+  }
+
+  <span class="cm-variable">alert</span>(<span class="cm-string">'Ingrese un NUMERO entre 1 y 3'</span>)
+
+  <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
+
+}
+
+
+
+<span class="cm-keyword">const</span> <span class="cm-def">nombreJugador</span> <span class="cm-operator">=</span> <span class="cm-variable">iniciarJuego</span>()
+
+<span class="cm-variable">alert</span>(<span class="cm-string">'Gracias por jugar :'</span> <span class="cm-operator">+</span> <span class="cm-variable">nombreJugador</span>)
+
+<span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable">compararJugadas</span>())
+
+</code></pre>
+
+<p>Este es el punto de llegada al código de clase, antes de resolver la mesa de trabajo. Se juega una partida y el resultado se muestra por consola.</p>
+
+<p><strong>Probá:</strong></p>
+
+<p>Ana y una jugada válida → bienvenida, agradecimientos, nombre en consola, jugada de la PC y resultado en consola.</p>
+
+<h2>Etapa 16. Mesa de trabajo</h2>
+
+<h3>Ejercicio 46. Mostrar el resultado</h3>
+
+<pre class="cm-s-odawi"><code>
+<span class="cm-keyword">function</span> <span class="cm-def">mostrarResultado</span>(<span class="cm-def">resultadoPartida</span>) {
+
+  <span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable-2">resultadoPartida</span>)
+
+  <span class="cm-variable">alert</span>(<span class="cm-variable-2">resultadoPartida</span>)
+
+}
+
+
+
+<span class="cm-variable">mostrarResultado</span>(<span class="cm-string">'Gana el jugador 👶🏻'</span>)
+
+<span class="cm-variable">mostrarResultado</span>(<span class="cm-string">'Empate 🫱🏻🫲🏻'</span>)
+
+<span class="cm-variable">mostrarResultado</span>(<span class="cm-string">'Gana la PC 🤖'</span>)
+
+</code></pre>
+
+<p>La función recibe el mensaje ya calculado. Estas llamadas con textos fijos sirven para probarla sin depender del azar.</p>
+
+<p><strong>Probá:</strong></p>
+
+<p>Cada uno de los tres textos aparece dos veces: una salida de consola y una alerta.</p>
+
+<h3>Ejercicio 47. Alentar al perder</h3>
+
+<pre class="cm-s-odawi"><code>
+<span class="cm-keyword">function</span> <span class="cm-def">mostrarResultado</span>(<span class="cm-def">resultadoPartida</span>) {
+
+  <span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable-2">resultadoPartida</span>)
+
+  <span class="cm-variable">alert</span>(<span class="cm-variable-2">resultadoPartida</span>)
+
+  <span class="cm-keyword">if</span> (<span class="cm-variable-2">resultadoPartida</span> <span class="cm-operator">==</span> <span class="cm-string">'Gana la PC 🤖'</span>) {
+
+    <span class="cm-variable">alert</span>(<span class="cm-string">'¡Ánimo! Mucha suerte en la próxima oportunidad.'</span>)
+
+  }
+
+}
+
+
+
+<span class="cm-variable">mostrarResultado</span>(<span class="cm-string">'Gana el jugador 👶🏻'</span>)
+
+<span class="cm-variable">mostrarResultado</span>(<span class="cm-string">'Empate 🫱🏻🫲🏻'</span>)
+
+<span class="cm-variable">mostrarResultado</span>(<span class="cm-string">'Gana la PC 🤖'</span>)
+
+</code></pre>
+
+<p>Los cuatro puntos de la mesa están resueltos. El texto de aliento es una propuesta; la consigna permite escribir otro equivalente.</p>
+
+<p><strong>Probá:</strong></p>
+
+<p>Victoria y empate → dos salidas cada uno. Derrota → esas dos salidas y una tercera alerta de aliento.</p>
+
+<h3>Ejercicio 48. Usarla en el juego</h3>
+
+<pre class="cm-s-odawi"><code>
+<span class="cm-keyword">function</span> <span class="cm-def">iniciarJuego</span>() {
+
+  <span class="cm-variable">alert</span>(<span class="cm-string">'Bienvenido al piedra, papel o tijera de Front 2 :D'</span>)
+
+
+
+  <span class="cm-keyword">let</span> <span class="cm-def">nombre</span>
+
+
+
+  <span class="cm-keyword">do</span> {
+
+    <span class="cm-variable-2">nombre</span> <span class="cm-operator">=</span> <span class="cm-variable">prompt</span>(<span class="cm-string">'Ingrese su nombre por favor: '</span>)
+
+  } <span class="cm-keyword">while</span> (<span class="cm-operator">!</span><span class="cm-variable">validarNombre</span>(<span class="cm-variable-2">nombre</span>))
+
+
+
+  <span class="cm-variable">alert</span>(<span class="cm-string">'Gracias por jugar '</span> <span class="cm-operator">+</span> <span class="cm-variable-2">nombre</span> <span class="cm-operator">+</span> <span class="cm-string">'. Mucha suerte'</span>)
+
+  <span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-string">'El jugador es: '</span> <span class="cm-operator">+</span> <span class="cm-variable-2">nombre</span>)
+
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">nombre</span>.<span class="cm-property">toLocaleUpperCase</span>()
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">pedirJugada</span>() {
+
+  <span class="cm-keyword">let</span> <span class="cm-def">eleccion</span> <span class="cm-operator">=</span> <span class="cm-number">0</span>
+
+  <span class="cm-comment">//1 piedra, 2 papel, 3 para tijera</span>
+
+  <span class="cm-keyword">do</span> {
+
+    <span class="cm-variable-2">eleccion</span> <span class="cm-operator">=</span> <span class="cm-variable">parseInt</span>(
+
+      <span class="cm-variable">prompt</span>(<span class="cm-string">'Ingrese un numero para jugar: 1 piedra, 2 papel, 3 para tijera'</span>)
+
+    )
+
+  } <span class="cm-keyword">while</span> (<span class="cm-operator">!</span><span class="cm-variable">validarJugada</span>(<span class="cm-variable-2">eleccion</span>))
+
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">eleccion</span>
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">jugadaRandom</span>() {
+
+  <span class="cm-keyword">let</span> <span class="cm-def">numero</span> <span class="cm-operator">=</span> <span class="cm-variable">parseInt</span>(<span class="cm-variable">Math</span>.<span class="cm-property">random</span>() <span class="cm-operator">*</span> <span class="cm-number">3</span> <span class="cm-operator">+</span> <span class="cm-number">1</span>)
+
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">numero</span>
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">compararJugadas</span>() {
+
+  <span class="cm-comment">//1 piedra, 2 papel, 3 para tijera</span>
+
+  <span class="cm-keyword">const</span> <span class="cm-def">resultadosPosibles</span> <span class="cm-operator">=</span> [
+
+    <span class="cm-string">'Gana el jugador 👶🏻'</span>, <span class="cm-comment">//Posicion 0 gano</span>
+
+    <span class="cm-string">'Empate 🫱🏻🫲🏻'</span>, <span class="cm-comment">//posicion 1 empate</span>
+
+    <span class="cm-string">'Gana la PC 🤖'</span> <span class="cm-comment">// posicion 2 gana pc</span>
+
+  ]
+
+  <span class="cm-keyword">const</span> <span class="cm-def">eleccionJugador</span> <span class="cm-operator">=</span> <span class="cm-variable">pedirJugada</span>()
+
+  <span class="cm-keyword">const</span> <span class="cm-def">eleccionComputadora</span> <span class="cm-operator">=</span> <span class="cm-variable">jugadaRandom</span>()
+
+  <span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-string">'Jugada de la PC: '</span> <span class="cm-operator">+</span> <span class="cm-variable-2">eleccionComputadora</span>)
+
+
+
+  <span class="cm-keyword">if</span> (<span class="cm-variable-2">eleccionJugador</span> <span class="cm-operator">==</span> <span class="cm-variable-2">eleccionComputadora</span>) {
+
+    <span class="cm-keyword">return</span> <span class="cm-variable-2">resultadosPosibles</span>[<span class="cm-number">1</span>]
+
+  } <span class="cm-keyword">else</span> <span class="cm-keyword">if</span> (
+
+    (<span class="cm-variable-2">eleccionJugador</span> <span class="cm-operator">==</span> <span class="cm-number">1</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccionComputadora</span> <span class="cm-operator">==</span> <span class="cm-number">3</span>) <span class="cm-operator">||</span>
+
+    (<span class="cm-variable-2">eleccionJugador</span> <span class="cm-operator">==</span> <span class="cm-number">2</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccionComputadora</span> <span class="cm-operator">==</span> <span class="cm-number">1</span>) <span class="cm-operator">||</span>
+
+    (<span class="cm-variable-2">eleccionJugador</span> <span class="cm-operator">==</span> <span class="cm-number">3</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccionComputadora</span> <span class="cm-operator">==</span> <span class="cm-number">2</span>)
+
+  ) {
+
+    <span class="cm-keyword">return</span> <span class="cm-variable-2">resultadosPosibles</span>[<span class="cm-number">0</span>]
+
+  }
+
+  <span class="cm-keyword">return</span> <span class="cm-variable-2">resultadosPosibles</span>[<span class="cm-number">2</span>]
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">validarNombre</span>(<span class="cm-def">nombre</span>) {
+
+  <span class="cm-keyword">if</span> (<span class="cm-variable-2">nombre</span> <span class="cm-operator">==</span> <span class="cm-atom">null</span> <span class="cm-operator">||</span> <span class="cm-variable-2">nombre</span> <span class="cm-operator">==</span> <span class="cm-string">''</span> <span class="cm-operator">||</span> <span class="cm-variable-2">nombre</span>.<span class="cm-property">length</span> <span class="cm-operator">&lt;</span> <span class="cm-number">3</span> <span class="cm-operator">||</span> <span class="cm-operator">!</span><span class="cm-variable">isNaN</span>(<span class="cm-variable-2">nombre</span>)) {
+
+    <span class="cm-variable">alert</span>(<span class="cm-string">'El nombre ingresado debe ser un texto de al menos 3 caracteres'</span>)
+
+    <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
+
+  }
+
+  <span class="cm-keyword">return</span> <span class="cm-atom">true</span>
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">validarJugada</span>(<span class="cm-def">eleccion</span>) {
+
+  <span class="cm-keyword">if</span> (<span class="cm-operator">!</span><span class="cm-variable">isNaN</span>(<span class="cm-variable-2">eleccion</span>) <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccion</span> <span class="cm-operator">&gt;</span> <span class="cm-number">0</span> <span class="cm-operator">&amp;&amp;</span> <span class="cm-variable-2">eleccion</span> <span class="cm-operator">&lt;</span> <span class="cm-number">4</span>) {
+
+    <span class="cm-keyword">return</span> <span class="cm-atom">true</span>
+
+  }
+
+  <span class="cm-variable">alert</span>(<span class="cm-string">'Ingrese un NUMERO entre 1 y 3'</span>)
+
+  <span class="cm-keyword">return</span> <span class="cm-atom">false</span>
+
+}
+
+
+
+<span class="cm-keyword">function</span> <span class="cm-def">mostrarResultado</span>(<span class="cm-def">resultadoPartida</span>) {
+
+  <span class="cm-variable">console</span>.<span class="cm-property">log</span>(<span class="cm-variable-2">resultadoPartida</span>)
+
+  <span class="cm-variable">alert</span>(<span class="cm-variable-2">resultadoPartida</span>)
+
+  <span class="cm-keyword">if</span> (<span class="cm-variable-2">resultadoPartida</span> <span class="cm-operator">==</span> <span class="cm-string">'Gana la PC 🤖'</span>) {
+
+    <span class="cm-variable">alert</span>(<span class="cm-string">'¡Ánimo! Mucha suerte en la próxima oportunidad.'</span>)
+
+  }
+
+}
+
+
+
+<span class="cm-keyword">const</span> <span class="cm-def">nombreJugador</span> <span class="cm-operator">=</span> <span class="cm-variable">iniciarJuego</span>()
+
+<span class="cm-variable">alert</span>(<span class="cm-string">'Gracias por jugar :'</span> <span class="cm-operator">+</span> <span class="cm-variable">nombreJugador</span>)
+
+<span class="cm-variable">mostrarResultado</span>(<span class="cm-variable">compararJugadas</span>())
+
+</code></pre>
+
+<p>La única adaptación del programa principal es pasar el resultado a la nueva función. El resto de la solución conserva nombres, operadores, mensajes y forma de resolver del código de clase.</p>
+
+<p><strong>Probá:</strong></p>
+
+<p>La partida pide nombre y una jugada válida; muestra el resultado en consola y alerta. Si gana la PC, agrega el aliento. No debe pedir una segunda jugada válida.</p>
+
+<h2>El punto de llegada del recorrido Código de clase</h2>
+
+<p>Dentro del recorrido adicional, el ejercicio 45 reproduce el programa de clase con iniciarJuego, pedirJugada, jugadaRandom, compararJugadas, validarNombre y validarJugada. compararJugadas no recibe parámetros: obtiene las jugadas llamando a pedirJugada y jugadaRandom. Devuelve exactamente Gana el jugador 👶🏻, Empate 🫱🏻🫲🏻 o Gana la PC 🤖.</p>
+
+<p>Se conservan parseInt, isNaN, ==, do...while y toLocaleUpperCase. validarJugada comprueba el rango; pedirJugada convierte con parseInt antes de validar. Por eso 2abc y 2.5 ingresados en prompt se convierten en 2, como en la referencia. validarNombre se utiliza tal como está dada, sin agregar otras condiciones.</p>
+
+<h2>Mesa de trabajo</h2>
+
+<p>1. Crear una función que reciba como parámetro el texto del resultado.</p>
+<p>2. Mostrarlo por consola.</p>
+<p>3. Mostrarlo mediante una alerta.</p>
+<p>4. Si hubo derrota, agregar una alerta de aliento y suerte para la próxima oportunidad.</p>
+
+<p>Los ejercicios 46 a 48 resuelven esta consigna con mostrarResultado(resultadoPartida). Al integrarla, la última línea pasa de console.log(compararJugadas()) a mostrarResultado(compararJugadas()). Se compara una sola vez. Las seis funciones originales se conservan.</p>
 
 <h2>Antes de pasar a DOM</h2>
 
-<p>El estudiante debería poder explicar qué recibe y qué devuelve cada función, identificar qué funciones muestran mensajes o modifican datos, probar las nueve comparaciones y explicar por qué un empate no acerca a nadie a las dos victorias. DOM será otra forma de ingresar y mostrar datos; las reglas de comparación se pueden reutilizar.</p>
+<p>Explicá por qué el pedido se repite cuando la validación falla, qué retorna cada función, cómo se elige una posición del arreglo y por qué el aliento aparece solo al perder. Probá las nueve combinaciones de jugadas.</p>
 
 </body></html>
